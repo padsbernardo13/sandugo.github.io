@@ -209,7 +209,16 @@ tr.row-pastdue td:first-child::before{content:'';display:inline-block;width:6px;
     <div class="topbar-right">
       <span class="role-badge role-admin">Admin</span>
       <span class="user-name" id="admin-welcome"></span>
-      <button class="btn-sm" onclick="doLogout()">Sign Out</button>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span id="db-status" style="font-size:11px;color:var(--muted);display:flex;align-items:center;padding:5px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;white-space:nowrap"></span>
+        <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="manualSync()">🔄 Sync</button>
+        <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="openDBSettings()">🗄 Database</button>
+        <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="exportDB()">⬇ Export</button>
+        <button class="btn-sm" style="border-color:rgba(232,160,32,.3);color:var(--accent)" onclick="document.getElementById('import-file').click()">⬆ Import</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importDB(event)"/>
+        <button class="btn-sm" style="border-color:rgba(155,110,204,.3);color:var(--purple)" onclick="openChangePassword()">🔐 Password</button>
+        <button class="btn-sm" onclick="doLogout()">Sign Out</button>
+      </div>
     </div>
   </div>
   <div class="nav-tabs">
@@ -472,6 +481,83 @@ tr.row-pastdue td:first-child::before{content:'';display:inline-block;width:6px;
   </div>
 </div>
 
+<div id="modal-change-pass" class="modal-overlay">
+  <div class="modal">
+    <h3>🔐 Change Admin Password</h3>
+    <p>Enter your current password then choose a new one.</p>
+    <div id="change-pass-err" class="login-err"></div>
+    <div class="field"><label>Current Password</label><input type="password" id="cp-current" placeholder="Enter current password"/></div>
+    <div class="field"><label>New Password</label><input type="password" id="cp-new" placeholder="Enter new password"/></div>
+    <div class="field"><label>Confirm New Password</label><input type="password" id="cp-confirm" placeholder="Repeat new password"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-change-pass')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveNewPassword()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-db-settings" class="modal-overlay">
+  <div class="modal" style="max-width:500px">
+    <h3>🗄 Supabase Database</h3>
+    <p>Connect to your Supabase project for cloud storage. Data will sync across all devices.</p>
+    <div id="sb-status-msg" class="login-err"></div>
+    <div class="field">
+      <label>Project URL</label>
+      <input type="text" id="sb-url-input" placeholder="https://xxxxxxxxxxxx.supabase.co"/>
+    </div>
+    <div class="field">
+      <label>Anon / Public API Key</label>
+      <input type="password" id="sb-key-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."/>
+    </div>
+    <!-- SQL Schema hint -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px">
+      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;font-weight:600">📋 Required SQL Schema</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Run this in your Supabase SQL Editor:</div>
+      <pre id="sql-schema" style="font-size:10.5px;color:#afc8af;background:#0a120a;border-radius:7px;padding:10px 12px;overflow-x:auto;line-height:1.6;white-space:pre-wrap">create table users (
+  username text primary key,
+  password text, role text, fname text, lname text,
+  email text, joined text, status text,
+  share_capital numeric default 0
+);
+create table collections (
+  id bigint primary key, username text, amount numeric,
+  year text, date text, note text, type text
+);
+create table loans (
+  id bigint primary key, username text, amount numeric,
+  repaid numeric default 0, date text, due_date text,
+  interest numeric, monthly_payment numeric,
+  total_payable numeric, note text, status text
+);
+-- Disable RLS (or add policies if needed)
+alter table users enable row level security;
+alter table collections enable row level security;
+alter table loans enable row level security;
+create policy "Allow all" on users for all using (true) with check (true);
+create policy "Allow all" on collections for all using (true) with check (true);
+create policy "Allow all" on loans for all using (true) with check (true);</pre>
+      <button onclick="copySchema()" style="margin-top:8px;padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif" id="copy-schema-btn">📋 Copy SQL</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="disconnectDB()" style="color:var(--danger);border-color:rgba(201,76,76,.3)">Disconnect</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-db-settings')">Cancel</button>
+      <button class="btn btn-gold" id="sb-test-btn" onclick="saveDBSettings()">Test & Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-import" class="modal-overlay">
+  <div class="modal">
+    <h3>Import Database</h3>
+    <p>This will <strong style="color:var(--danger)">replace all current data</strong> with the backup file. This cannot be undone.</p>
+    <div id="import-summary"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-import');window._pendingImport=null">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmImport()">Yes, Import & Replace</button>
+    </div>
+  </div>
+</div>
+
 <div id="modal-del-coll" class="modal-overlay">
   <div class="modal">
     <h3>Delete Collection Record</h3>
@@ -554,14 +640,112 @@ tr.row-pastdue td:first-child::before{content:'';display:inline-block;width:6px;
 <div class="toast" id="toast"></div>
 
 <script>
-// ── DB ──
+// ── SUPABASE CONFIG ──
+let SUPABASE_URL = localStorage.getItem('sb_url')||'';
+let SUPABASE_KEY = localStorage.getItem('sb_key')||'';
+let useSupabase = !!(SUPABASE_URL && SUPABASE_KEY);
+
+async function sbFetch(path, method='GET', body=null){
+  if(!useSupabase) throw new Error('Supabase not configured');
+  const controller = new AbortController();
+  const timeout = setTimeout(()=>controller.abort(), 10000); // 10s timeout
+  try {
+    const opts = {
+      method,
+      signal: controller.signal,
+      headers:{
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer '+SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': method==='POST'?'return=representation':'',
+      }
+    };
+    if(body) opts.body = JSON.stringify(body);
+    const res = await fetch(SUPABASE_URL+'/rest/v1/'+path, opts);
+    if(!res.ok){ const e=await res.text(); throw new Error('HTTP '+res.status+': '+e); }
+    const text = await res.text();
+    return text ? JSON.parse(text) : [];
+  } catch(e){
+    if(e.name==='AbortError') throw new Error('Request timed out. Check your internet connection.');
+    throw e;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// ── DB (localStorage fallback + Supabase) ──
 const DB = {
+  // --- LOCAL ---
   getUsers(){ return JSON.parse(localStorage.getItem('sandugo_users')||'[]') },
   saveUsers(u){ localStorage.setItem('sandugo_users', JSON.stringify(u)) },
   getCollections(){ return JSON.parse(localStorage.getItem('sandugo_coll')||'[]') },
   saveCollections(c){ localStorage.setItem('sandugo_coll', JSON.stringify(c)) },
   getLoans(){ return JSON.parse(localStorage.getItem('sandugo_loans')||'[]') },
   saveLoans(l){ localStorage.setItem('sandugo_loans', JSON.stringify(l)) },
+
+  // --- SUPABASE ---
+  async fetchAll(){
+    if(!useSupabase) return;
+    try {
+      showDBStatus('loading');
+      const [users, collections, loans] = await Promise.all([
+        sbFetch('users?select=*'),
+        sbFetch('collections?select=*'),
+        sbFetch('loans?select=*'),
+      ]);
+      const mapUser = u=>({...u, fname:u.fname||u.first_name, lname:u.lname||u.last_name, shareCapital:u.share_capital??u.shareCapital});
+      const mapLoan = l=>({...l, dueDate:l.due_date??l.dueDate, monthlyPayment:l.monthly_payment??l.monthlyPayment, totalPayable:l.total_payable??l.totalPayable});
+      this.saveUsers(users.map(mapUser));
+      this.saveCollections(collections);
+      this.saveLoans(loans.map(mapLoan));
+      showDBStatus('online');
+    } catch(e){
+      showDBStatus('error', e.message);
+      toast('⚠️ Sync failed: '+e.message+'. Using local data.');
+    }
+  },
+
+  async pushUser(u){
+    if(!useSupabase) return;
+    const row = {username:u.username,password:u.password,role:u.role,fname:u.fname,lname:u.lname,
+      email:u.email,joined:u.joined,status:u.status,share_capital:u.shareCapital??0};
+    try {
+      await sbFetch(`users?username=eq.${encodeURIComponent(u.username)}`, 'DELETE');
+      await sbFetch('users', 'POST', row);
+    } catch(e){ toast('⚠️ User sync failed: '+e.message); }
+  },
+
+  async pushAllUsers(){
+    if(!useSupabase) return;
+    for(const u of this.getUsers()) await this.pushUser(u);
+  },
+
+  async pushCollection(c){
+    if(!useSupabase) return;
+    try {
+      await sbFetch(`collections?id=eq.${c.id}`, 'DELETE');
+      await sbFetch('collections', 'POST', c);
+    } catch(e){ toast('⚠️ Collection sync failed: '+e.message); }
+  },
+
+  async deleteCollection(id){
+    if(!useSupabase) return;
+    try { await sbFetch(`collections?id=eq.${id}`, 'DELETE'); } catch(e){ toast('⚠️ Delete sync failed: '+e.message); }
+  },
+
+  async pushLoan(l){
+    if(!useSupabase) return;
+    const row={...l, due_date:l.dueDate, monthly_payment:l.monthlyPayment, total_payable:l.totalPayable};
+    try {
+      await sbFetch(`loans?id=eq.${l.id}`, 'DELETE');
+      await sbFetch('loans', 'POST', row);
+    } catch(e){ toast('⚠️ Loan sync failed: '+e.message); }
+  },
+
+  async deleteLoan(id){
+    if(!useSupabase) return;
+    try { await sbFetch(`loans?id=eq.${id}`, 'DELETE'); } catch(e){ toast('⚠️ Delete sync failed: '+e.message); }
+  },
 };
 
 // ── SEED ──
@@ -654,6 +838,142 @@ function applyLoanFilter(loans, filter){
   return loans.filter(l => loanDueStatus(l) === filter);
 }
 
+// ── DB STATUS INDICATOR ──
+function showDBStatus(state, msg=''){
+  const el = document.getElementById('db-status');
+  if(!el) return;
+  const states = {
+    offline: {dot:'#7a8a7a', text:'Local Storage'},
+    loading: {dot:'#e8a020', text:'Syncing…'},
+    online:  {dot:'#4cc9a8', text:'Supabase Connected'},
+    error:   {dot:'#c94c4c', text:'DB Error'},
+  };
+  const s = states[state]||states.offline;
+  el.innerHTML = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${s.dot};margin-right:5px;flex-shrink:0"></span>${s.text}${msg?': <span title="'+msg+'" style="cursor:help;text-decoration:underline dotted">details</span>':''}`;
+}
+
+// ── SUPABASE SETTINGS MODAL ──
+function openDBSettings(){
+  document.getElementById('sb-url-input').value = SUPABASE_URL;
+  document.getElementById('sb-key-input').value = SUPABASE_KEY;
+  document.getElementById('sb-status-msg').style.display='none';
+  openModal('modal-db-settings');
+}
+async function saveDBSettings(){
+  const url = document.getElementById('sb-url-input').value.trim().replace(/\/$/,'');
+  const key = document.getElementById('sb-key-input').value.trim();
+  const msg = document.getElementById('sb-status-msg');
+  if(!url||!key){ showErr(msg,'Both URL and API Key are required.'); return; }
+  msg.style.display='none';
+  document.getElementById('sb-test-btn').textContent='Testing…';
+  try {
+    const res = await fetch(url+'/rest/v1/users?select=username&limit=1',{
+      headers:{'apikey':key,'Authorization':'Bearer '+key}
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status+' — Check URL/Key or RLS policies.');
+    SUPABASE_URL=url; SUPABASE_KEY=key;
+    localStorage.setItem('sb_url',url); localStorage.setItem('sb_key',key);
+    useSupabase=true;
+    closeModal('modal-db-settings');
+    toast('✓ Supabase connected!');
+    showDBStatus('loading');
+    await DB.fetchAll();
+    if(currentUser) currentUser.role==='admin'?renderAdminOverview():renderMemberHome();
+  } catch(e){
+    showErr(msg, e.message);
+  } finally {
+    document.getElementById('sb-test-btn').textContent='Test & Save';
+  }
+}
+function disconnectDB(){
+  SUPABASE_URL=''; SUPABASE_KEY=''; useSupabase=false;
+  localStorage.removeItem('sb_url'); localStorage.removeItem('sb_key');
+  closeModal('modal-db-settings');
+  showDBStatus('offline');
+  toast('Disconnected from Supabase. Using local storage.');
+}
+
+// ── EXPORT / IMPORT ──
+function exportDB(){
+  const data={
+    users: DB.getUsers(),
+    collections: DB.getCollections(),
+    loans: DB.getLoans(),
+    exportedAt: new Date().toISOString(),
+    version: '1.0'
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`sandugo_backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Database exported successfully.');
+}
+
+function importDB(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!data.users||!data.collections||!data.loans){
+        toast('❌ Invalid backup file.'); return;
+      }
+      // confirm
+      openImportConfirm(data);
+    } catch(err){
+      toast('❌ Failed to read file. Make sure it is a valid JSON backup.');
+    }
+    e.target.value=''; // reset input
+  };
+  reader.readAsText(file);
+}
+
+function openImportConfirm(data){
+  const members=data.users.filter(u=>u.role==='member').length;
+  const colls=data.collections.length;
+  const loans=data.loans.length;
+  const exported=data.exportedAt?new Date(data.exportedAt).toLocaleString('en-PH'):'Unknown';
+  document.getElementById('import-summary').innerHTML=`
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;margin-bottom:4px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="color:var(--muted)">Exported on</span><span class="td-mono">${exported}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="color:var(--muted)">Members</span><span class="td-mono">${members}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="color:var(--muted)">Collection Records</span><span class="td-mono">${colls}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span style="color:var(--muted)">Loan Records</span><span class="td-mono">${loans}</span>
+      </div>
+    </div>`;
+  // store pending data
+  window._pendingImport=data;
+  openModal('modal-import');
+}
+
+function confirmImport(){
+  const data=window._pendingImport;
+  if(!data) return;
+  DB.saveUsers(data.users);
+  DB.saveCollections(data.collections);
+  DB.saveLoans(data.loans);
+  window._pendingImport=null;
+  closeModal('modal-import');
+  // reload current session user from new data
+  if(currentUser){
+    const updated=DB.getUsers().find(u=>u.username===currentUser.username);
+    if(updated){ currentUser=updated; sessionStorage.setItem('sandugo_session',JSON.stringify(updated)); }
+  }
+  renderAdminOverview();
+  toast('✓ Database imported successfully.');
+}
+
 // ── LOGIN / LOGOUT / REGISTER ──
 function doLogin(){
   const u=val('l-username'), p=val('l-password');
@@ -677,7 +997,7 @@ function doRegister(){
   if(users.find(u=>u.username===username)){ showErr(err,'Username already taken.'); return; }
   err.style.display='none';
   users.push({username,password:pass,role:'member',fname,lname,email,joined:today(),status:'active'});
-  DB.saveUsers(users);
+  DB.saveUsers(users); DB.pushAllUsers();
   toast('Account created! You can now log in.');
   showPage('login-page');
 }
@@ -792,13 +1112,14 @@ function saveCollection(){
   const colls=DB.getCollections();
   colls.push({id:Date.now(),username,amount,year,date:today(),note,type});
   DB.saveCollections(colls);
-  // If share capital, also add to the member's profile shareCapital
   if(type==='sharecapital'){
     const users=DB.getUsers();
     const u=users.find(x=>x.username===username);
     if(u) u.shareCapital=(Number(u.shareCapital)||0)+amount;
-    DB.saveUsers(users);
+    DB.saveUsers(users); DB.pushUser(u);
   }
+  const newColl=colls[colls.length-1];
+  DB.pushCollection(newColl);
   closeModal('modal-coll'); renderCollections(); toast('Collection record saved.');
 }
 
@@ -914,7 +1235,9 @@ function saveLoan(){
   const totalPayable=monthly*6;
   const loans=DB.getLoans();
   loans.push({id:Date.now(),username,amount,repaid:0,date:today(),dueDate,interest,monthlyPayment:monthly,totalPayable,note,status:'active'});
-  DB.saveLoans(loans); closeModal('modal-loan'); renderLoans(); toast('Loan issued.');
+  DB.saveLoans(loans);
+  DB.pushLoan(loans[loans.length-1]);
+  closeModal('modal-loan'); renderLoans(); toast('Loan issued.');
 }
 function openPay(id){
   document.getElementById('pay-loan-id').value=id;
@@ -931,7 +1254,8 @@ function savePayment(){
     loan.repaid=Math.min(Number(loan.repaid)+amt,Number(loan.amount));
     if(loan.repaid>=loan.amount) loan.status='settled';
   }
-  DB.saveLoans(loans); closeModal('modal-pay'); renderLoans(); toast('Payment recorded.');
+  DB.saveLoans(loans); DB.pushLoan(loan);
+  closeModal('modal-pay'); renderLoans(); toast('Payment recorded.');
 }
 function openDeleteColl(id){
   document.getElementById('del-coll-id').value=id;
@@ -1052,24 +1376,41 @@ function renderMyCollections(){
     .join('')||'<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:28px">No collection records</td></tr>';
 }
 // Compute current monthly payment based on remaining balance (reducing balance)
+// If past due: add 2% penalty per month overdue on top of regular monthly payment
 function computeCurrentMonthly(loan){
   if(loan.status==='settled') return '<span style="color:var(--accent3)">Settled</span>';
   const bal = Number(loan.amount) - Number(loan.repaid);
   if(bal <= 0) return '<span style="color:var(--accent3)">₱ 0.00</span>';
   const annualRate = Number(loan.interest) || 18;
   const monthlyRate = annualRate / 100 / 12;
-  // Estimate months remaining from due date
   const now = new Date(); now.setHours(0,0,0,0);
   let monthsLeft = 1;
+  let monthsOverdue = 0;
   if(loan.dueDate){
     const due = new Date(loan.dueDate); due.setHours(0,0,0,0);
-    const ms = due - now;
-    monthsLeft = Math.max(1, Math.ceil(ms / (1000*60*60*24*30)));
+    const diffDays = Math.ceil((due - now) / (1000*60*60*24));
+    if(diffDays < 0){
+      // Past due: count months overdue (ceiling)
+      monthsOverdue = Math.ceil(Math.abs(diffDays) / 30);
+      monthsLeft = 1;
+    } else {
+      monthsLeft = Math.max(1, Math.ceil(diffDays / 30));
+    }
   }
-  // Standard amortization formula on remaining balance & remaining months
-  const monthly = monthlyRate === 0 ? bal / monthsLeft
+  // Base monthly payment on remaining balance & remaining months
+  const baseMonthly = monthlyRate === 0 ? bal / monthsLeft
     : bal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -monthsLeft));
-  return '₱ ' + fmt(monthly);
+
+  if(monthsOverdue > 0){
+    // 2% penalty per month overdue applied on outstanding balance
+    const penaltyRate = 0.02;
+    const totalPenalty = bal * penaltyRate * monthsOverdue;
+    const totalDue = baseMonthly + totalPenalty;
+    return `<span style="color:var(--danger);font-weight:600" title="Base: ₱${fmt(baseMonthly)} + Penalty: ₱${fmt(totalPenalty)} (2% × ${monthsOverdue} mo)">
+      ₱ ${fmt(totalDue)} <span style="font-size:10px;background:rgba(201,76,76,.15);padding:2px 6px;border-radius:4px;margin-left:2px">+penalty</span>
+    </span>`;
+  }
+  return '₱ ' + fmt(baseMonthly);
 }
 
 function renderMyLoans(){
@@ -1371,7 +1712,50 @@ document.querySelectorAll('.modal-overlay').forEach(o=>{
 });
 document.getElementById('l-password').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
 
+async function manualSync(){
+  if(!useSupabase){ toast('⚠️ No Supabase connection configured.'); return; }
+  await DB.fetchAll();
+  if(currentUser) renderAdminOverview();
+  toast('✓ Data synced from Supabase.');
+}
+
+function openChangePassword(){
+  ['cp-current','cp-new','cp-confirm'].forEach(id=>setVal(id,''));
+  document.getElementById('change-pass-err').style.display='none';
+  openModal('modal-change-pass');
+}
+async function saveNewPassword(){
+  const current=val('cp-current'), newPass=val('cp-new'), confirm=val('cp-confirm');
+  const err=document.getElementById('change-pass-err');
+  const users=DB.getUsers();
+  const admin=users.find(u=>u.username==='admin');
+  if(!admin||current!==admin.password){ showErr(err,'Current password is incorrect.'); return; }
+  if(!newPass||newPass.length<6){ showErr(err,'New password must be at least 6 characters.'); return; }
+  if(newPass!==confirm){ showErr(err,'New passwords do not match.'); return; }
+  err.style.display='none';
+  admin.password=newPass;
+  DB.saveUsers(users);
+  // sync to supabase
+  await DB.pushUser(admin);
+  // update session
+  currentUser=admin;
+  sessionStorage.setItem('sandugo_session',JSON.stringify(admin));
+  closeModal('modal-change-pass');
+  toast('✓ Admin password updated successfully.');
+}
+
+function copySchema(){
+  const txt=document.getElementById('sql-schema').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    document.getElementById('copy-schema-btn').textContent='✓ Copied!';
+    setTimeout(()=>document.getElementById('copy-schema-btn').textContent='📋 Copy SQL',2000);
+  });
+}
+
 if(currentUser){ currentUser.role==='admin'?loadAdmin():loadMember(); }
+// Init DB status & auto-fetch if supabase configured
+if(useSupabase){ showDBStatus('loading'); DB.fetchAll(); }
+else { showDBStatus('offline'); }
 </script>
 </body>
 </html>
