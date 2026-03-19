@@ -8,17 +8,17 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0f0a;--surface:#0f160f;--surface2:#162016;
-  --border:rgba(255,255,255,0.07);--accent:#e8a020;--accent2:#2a7a3a;
-  --accent3:#4cc9a8;--text:#e8f0e8;--muted:#7a8a7a;--danger:#c94c4c;
-  --purple:#9b6ecc;--green:#1a6b2a;--darkgreen:#0d4a1d;--warning:#e87d20;
+  --bg:#f0f4f0;--surface:#ffffff;--surface2:#f5f8f5;
+  --border:rgba(0,0,0,0.08);--accent:#b07d12;--accent2:#1a6b2a;
+  --accent3:#0d9e7e;--text:#1a2e1a;--muted:#6b7d6b;--danger:#c0392b;
+  --purple:#7b52cc;--green:#1a6b2a;--darkgreen:#e8f5eb;--warning:#d4680a;
 }
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 15% 15%,rgba(26,107,42,.10) 0%,transparent 60%),radial-gradient(ellipse 50% 45% at 85% 85%,rgba(232,160,32,.07) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 10% 10%,rgba(26,107,42,.05) 0%,transparent 60%),radial-gradient(ellipse 50% 45% at 90% 90%,rgba(176,125,18,.04) 0%,transparent 60%);pointer-events:none;z-index:0}
 .page{display:none;position:relative;z-index:1;min-height:100vh}
 .page.active{display:flex}
 #login-page{align-items:center;justify-content:center;padding:24px}
-.login-box{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:52px 48px;width:100%;max-width:440px;animation:fadeUp .5s ease both}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:52px 48px;width:100%;max-width:440px;animation:fadeUp .5s ease both;box-shadow:0 4px 24px rgba(0,0,0,.08)}
 .login-logo{text-align:center;margin-bottom:36px}
 .login-logo .icon{width:90px;height:90px;border-radius:50%;background:#fff;border:3px solid rgba(26,107,42,.3);display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto 14px;padding:4px}
 .login-logo .icon img{width:100%;height:100%;object-fit:contain}
@@ -27,15 +27,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .login-logo p{font-size:13px;color:var(--muted);margin-top:4px}
 .field{margin-bottom:20px}
 .field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
-.field input,.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
-.field input:focus,.field select:focus{border-color:var(--accent)}
+.field input,.field select{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(26,107,42,.08)}
 .field select option{background:var(--surface2)}
 .btn{width:100%;padding:14px;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s,transform .15s}
 .btn:hover{opacity:.9;transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
-.btn-gold{background:linear-gradient(135deg,#1a6b2a,#0d4a1d);color:#fff;border:1px solid rgba(26,107,42,.4)}
+.btn-gold{background:linear-gradient(135deg,#1e7a31,#155923);color:#fff;border:1px solid rgba(26,107,42,.3);box-shadow:0 2px 8px rgba(26,107,42,.25)}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted);margin-top:10px;font-size:13px}
-.login-err{background:rgba(201,76,76,.1);border:1px solid rgba(201,76,76,.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:18px;display:none}
+.login-err{background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:18px;display:none}
 .divider{display:flex;align-items:center;gap:12px;margin:24px 0;font-size:11px;color:var(--muted);letter-spacing:.08em}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 #register-page{align-items:center;justify-content:center;padding:24px}
@@ -44,26 +44,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .register-box p{font-size:13px;color:var(--muted);margin-bottom:32px}
 .grid-2f{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 #admin-page,#member-page{flex-direction:column;min-height:100vh}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 36px;border-bottom:1px solid var(--border);background:rgba(13,15,20,.8);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 36px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px;box-shadow:0 1px 8px rgba(0,0,0,.06)}
 .topbar-logo{display:flex;align-items:center;gap:12px}
 .topbar-logo .t-icon{width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid rgba(26,107,42,.4);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2px}
 .topbar-logo .t-icon img{width:100%;height:100%;object-fit:contain}
 .topbar-logo .t-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--accent2)}
 .topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .role-badge{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;font-weight:600}
-.role-admin{background:rgba(201,168,76,.12);color:var(--accent)}
-.role-member{background:rgba(76,143,201,.12);color:var(--accent2)}
+.role-admin{background:rgba(176,125,18,.12);color:var(--accent)}
+.role-member{background:rgba(26,107,42,.10);color:var(--accent2)}
 .user-name{font-size:14px;color:var(--muted)}
 .btn-sm{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
-.nav-tabs{display:flex;gap:4px;padding:16px 36px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.btn-sm:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(26,107,42,.05)}
+.nav-tabs{display:flex;gap:4px;padding:14px 36px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--surface2)}
 .tab{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);transition:all .2s;border:none;background:transparent;font-family:'DM Sans',sans-serif}
-.tab.active{background:var(--surface2);color:var(--text)}
+.tab.active{background:var(--surface);color:var(--accent2);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.07)}
 .tab:hover:not(.active){color:var(--text)}
 .content{flex:1;padding:36px;max-width:1280px;width:100%;margin:0 auto}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:28px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;animation:fadeUp .4s ease both}
-.stat-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.12)}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;animation:fadeUp .4s ease both;box-shadow:0 1px 6px rgba(0,0,0,.05)}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(26,107,42,.2);box-shadow:0 4px 16px rgba(0,0,0,.09)}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:16px 16px 0 0}
 .sc-gold::before{background:linear-gradient(90deg,var(--accent),transparent)}
 .sc-blue::before{background:linear-gradient(90deg,var(--accent2),transparent)}
@@ -72,48 +72,48 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sc-purple::before{background:linear-gradient(90deg,var(--purple),transparent)}
 .sc-orange::before{background:linear-gradient(90deg,var(--warning),transparent)}
 .sc-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:16px}
-.sc-gold .sc-icon{background:rgba(201,168,76,.12);color:var(--accent)}
-.sc-blue .sc-icon{background:rgba(76,143,201,.12);color:var(--accent2)}
-.sc-green .sc-icon{background:rgba(76,201,168,.12);color:var(--accent3)}
-.sc-red .sc-icon{background:rgba(201,76,76,.12);color:var(--danger)}
-.sc-purple .sc-icon{background:rgba(155,110,204,.12);color:var(--purple)}
-.sc-orange .sc-icon{background:rgba(232,125,32,.12);color:var(--warning)}
+.sc-gold .sc-icon{background:rgba(176,125,18,.10);color:var(--accent)}
+.sc-blue .sc-icon{background:rgba(26,107,42,.10);color:var(--accent2)}
+.sc-green .sc-icon{background:rgba(13,158,126,.10);color:var(--accent3)}
+.sc-red .sc-icon{background:rgba(192,57,43,.10);color:var(--danger)}
+.sc-purple .sc-icon{background:rgba(123,82,204,.10);color:var(--purple)}
+.sc-orange .sc-icon{background:rgba(212,104,10,.10);color:var(--warning)}
 .sc-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .sc-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1}
 .sc-value.mono{font-family:'DM Mono',monospace;font-size:22px}
-.table-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;animation:fadeUp .4s .1s ease both}
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;animation:fadeUp .4s .1s ease both;box-shadow:0 1px 6px rgba(0,0,0,.05)}
 .table-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
 .table-head h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
 .table-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.search-bar{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;width:200px;transition:border-color .2s}
+.search-bar{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;width:200px;transition:border-color .2s}
 .search-bar:focus{border-color:var(--accent)}
 .filter-pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;letter-spacing:.04em}
 .pill:hover{color:var(--text)}
 .pill.active{color:#fff}
-.pill-all.active{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.pill-all.active{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.15);color:var(--text)}
 .pill-active.active{background:rgba(76,143,201,.15);border-color:rgba(76,143,201,.35);color:#7fb8e8}
 .pill-settled.active{background:rgba(76,201,168,.15);border-color:rgba(76,201,168,.35);color:var(--accent3)}
 .pill-due.active{background:rgba(232,125,32,.15);border-color:rgba(232,125,32,.35);color:var(--warning)}
 .pill-pastdue.active{background:rgba(201,76,76,.15);border-color:rgba(201,76,76,.35);color:var(--danger)}
 table{width:100%;border-collapse:collapse}
-thead th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 24px;text-align:left;border-bottom:1px solid var(--border)}
+thead th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 24px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2)}
 tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--surface2)}
+tbody tr:hover{background:#f0f7f1}
 tbody td{padding:13px 24px;font-size:13px}
 .td-mono{font-family:'DM Mono',monospace;font-size:12px}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px}
-.b-gold{background:rgba(201,168,76,.12);color:var(--accent)}
-.b-blue{background:rgba(76,143,201,.12);color:#7fb8e8}
-.b-green{background:rgba(76,201,168,.12);color:var(--accent3)}
-.b-red{background:rgba(201,76,76,.12);color:var(--danger)}
-.b-purple{background:rgba(155,110,204,.12);color:var(--purple)}
-.b-orange{background:rgba(232,125,32,.12);color:var(--warning)}
+.b-gold{background:rgba(176,125,18,.12);color:var(--accent)}
+.b-blue{background:rgba(26,107,42,.10);color:var(--accent2)}
+.b-green{background:rgba(13,158,126,.12);color:var(--accent3)}
+.b-red{background:rgba(192,57,43,.12);color:var(--danger)}
+.b-purple{background:rgba(123,82,204,.12);color:var(--purple)}
+.b-orange{background:rgba(212,104,10,.12);color:var(--warning)}
 .action-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
 .action-btn:hover{border-color:var(--accent);color:var(--accent)}
 .action-btn.del:hover{border-color:var(--danger);color:var(--danger)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;padding:24px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:100%;max-width:460px;animation:fadeUp .3s ease both}
 .modal h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:6px}
@@ -121,14 +121,14 @@ tbody td{padding:13px 24px;font-size:13px}
 .modal-actions{display:flex;gap:10px;margin-top:24px}
 .modal-actions .btn{width:auto;flex:1}
 .btn-danger{background:linear-gradient(135deg,var(--danger),#a03030);color:#fff}
-.sec-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;display:flex;align-items:center;gap:10px;font-weight:600}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:28px;display:flex;align-items:center;gap:28px;animation:fadeUp .4s ease both}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:28px;display:flex;align-items:center;gap:28px;animation:fadeUp .4s ease both;box-shadow:0 1px 6px rgba(0,0,0,.05)}
 .profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#2a5f94);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;flex-shrink:0}
 .profile-info h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
 .profile-info p{font-size:13px;color:var(--muted);margin-top:4px}
 .profile-info .tags{display:flex;gap:8px;margin-top:10px}
-.toast{position:fixed;bottom:28px;right:28px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--text);z-index:300;animation:fadeUp .3s ease both;display:none}
+.toast{position:fixed;bottom:28px;right:28px;background:#1a2e1a;border:1px solid rgba(26,107,42,.3);border-radius:10px;padding:12px 20px;font-size:13px;color:#e8f0e8;z-index:300;animation:fadeUp .3s ease both;display:none;box-shadow:0 4px 16px rgba(0,0,0,.15)}
 .toast.show{display:block}
 .panel{display:none}.panel.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -194,6 +194,7 @@ tbody td{padding:13px 24px;font-size:13px}
       <button class="btn-sm" style="border-color:rgba(201,76,76,.3);color:var(--danger)" onclick="openResetUser()">🔄 Reset User</button>
       <button class="btn-sm" style="border-color:rgba(155,110,204,.3);color:var(--purple)" onclick="openChangePassword()">🔐 Password</button>
       <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="manualSync()">🔄 Sync</button>
+      <button class="btn-sm" style="border-color:rgba(155,110,204,.3);color:var(--purple)" onclick="pushAllDataToSupabase()">☁️ Push All</button>
       <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="openDBSettings()">🗄 Database</button>
       <button class="btn-sm" style="border-color:rgba(76,201,168,.3);color:var(--accent3)" onclick="exportDB()">⬇ Export</button>
       <button class="btn-sm" style="border-color:rgba(232,160,32,.3);color:var(--accent)" onclick="document.getElementById('import-file').click()">⬆ Import</button>
@@ -212,13 +213,16 @@ tbody td{padding:13px 24px;font-size:13px}
     <div id="admin-overview" class="panel active">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <div class="sec-label" style="margin-bottom:0;flex:1">Dashboard Overview</div>
-        <button class="btn btn-gold" style="width:auto;padding:10px 22px;font-size:13px;border-radius:10px" onclick="openAddMember()">+ Add Member</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-gold" style="width:auto;padding:10px 22px;font-size:13px;border-radius:10px" onclick="openAddMember()">+ New Member</button>
+          <button class="btn btn-outline" style="width:auto;padding:10px 22px;font-size:13px;border-radius:10px;border-color:rgba(155,110,204,.4);color:var(--purple)" onclick="openAddOldMember()">📂 Add Old Member</button>
+        </div>
       </div>
       <div class="stat-grid" id="admin-stats"></div>
       <div class="sec-label">Recent Members</div>
       <div class="table-card">
         <div class="table-head"><h3>Latest Registrations</h3></div>
-        <table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Share Capital</th><th>Joined</th><th>Status</th></tr></thead>
+        <table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Share Capital</th><th>Subscriptions</th><th>Joined</th><th>Status</th></tr></thead>
         <tbody id="recent-members-tbody"></tbody></table>
       </div>
     </div>
@@ -228,7 +232,7 @@ tbody td{padding:13px 24px;font-size:13px}
           <h3>All Members</h3>
           <input class="search-bar" placeholder="🔍 Search member..." oninput="filterMembers(this.value)"/>
         </div>
-        <table><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+        <table><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Share Capital</th><th>Subscriptions</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
         <tbody id="members-tbody"></tbody></table>
       </div>
     </div>
@@ -337,13 +341,10 @@ tbody td{padding:13px 24px;font-size:13px}
               <button class="pill pill-pastdue" onclick="setMyLoanFilter('pastdue',this)">Past Due</button>
               <button class="pill pill-settled" onclick="setMyLoanFilter('settled',this)">Settled</button>
             </div>
-            <button class="btn btn-gold" style="width:auto;padding:9px 18px;font-size:13px" onclick="toggleLoanAppForm()">+ Loan Application</button>
+            <button class="btn btn-gold" style="width:auto;padding:9px 18px;font-size:13px" id="loan-app-toggle-btn" onclick="toggleLoanAppForm()">+ Loan Application</button>
           </div>
         </div>
-        <table>
-          <thead><tr><th>Amount</th><th>Interest</th><th>Monthly</th><th>Repaid</th><th>Balance</th><th>Due Date</th><th>Days</th><th>Status</th></tr></thead>
-          <tbody id="my-loans-tbody"></tbody>
-        </table>
+        <div id="my-loans-container" style="padding:16px 20px;display:flex;flex-direction:column;gap:0"></div>
       </div>
       <!-- Inline Loan Application -->
       <div id="loan-app-form-wrap" style="display:none;margin-top:24px">
@@ -406,7 +407,7 @@ tbody td{padding:13px 24px;font-size:13px}
           <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin-bottom:16px">
             <div class="sec-label">Loan Details</div>
             <div class="grid-2f" style="gap:14px">
-              <div class="field"><label>Loan Amount Requested (₱)</label><input type="number" id="lf-amount" placeholder="0.00" min="0"/></div>
+              <div class="field"><label>Loan Amount Requested (₱) <span id="lf-amount-hint" style="font-size:11px;font-weight:600;float:right;letter-spacing:0;text-transform:none"></span></label><input type="number" id="lf-amount" placeholder="0.00" min="0" oninput="validateLFAmount(this)"/></div>
               <div class="field"><label>Purpose of Loan</label>
                 <select id="lf-purpose"><option value="">Select purpose</option>
                   <option>Business Capital</option><option>Home Improvement</option>
@@ -449,6 +450,7 @@ tbody td{padding:13px 24px;font-size:13px}
   <div class="modal">
     <h3>New Loan</h3><p>Issue a loan to a member</p>
     <div class="field"><label>Member</label><select id="loan-member-sel" onchange="updateLoanCalc()"></select></div>
+    <div id="loan-existing-warn" style="display:none;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--danger);line-height:1.5"></div>
     <div id="loan-sharecap-info" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px">
       <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">Share Capital</span><span id="lsc-sharecap" class="td-mono"></span></div>
       <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Max Loanable (×2)</span><span id="lsc-max" class="td-mono" style="color:var(--accent3);font-weight:600"></span></div>
@@ -460,15 +462,28 @@ tbody td{padding:13px 24px;font-size:13px}
       </select>
     </div>
     <div class="field"><label>Due Date <span style="color:var(--muted);font-size:11px">(6-month term)</span></label><input type="text" id="loan-due" readonly style="cursor:not-allowed;opacity:.6"/></div>
-    <div id="loan-amort-box" style="display:none;background:var(--darkgreen);border:1px solid rgba(26,107,42,.4);border-radius:12px;padding:16px;margin-bottom:16px">
+    <div id="loan-amort-box" style="display:none;background:var(--darkgreen);border:1px solid rgba(26,107,42,.15);border-radius:12px;padding:16px;margin-bottom:16px">
       <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);margin-bottom:12px;font-weight:600">📊 Loan Computation</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
-        <div style="color:var(--muted)">Principal</div><div id="la-principal" class="td-mono" style="text-align:right"></div>
+        <div style="color:var(--muted)">Principal (Loan Amount)</div><div id="la-principal" class="td-mono" style="text-align:right"></div>
         <div style="color:var(--muted)">Annual Rate</div><div id="la-rate" style="text-align:right"></div>
         <div style="color:var(--muted)">Total Interest</div><div id="la-interest" class="td-mono" style="text-align:right;color:var(--warning)"></div>
         <div style="color:var(--muted)">Total Payable</div><div id="la-total" class="td-mono" style="text-align:right;color:var(--accent3)"></div>
-        <div style="color:var(--text);font-weight:600;border-top:1px solid rgba(255,255,255,.1);padding-top:8px">Monthly Payment</div>
-        <div id="la-monthly" class="td-mono" style="text-align:right;color:#fff;font-weight:700;font-size:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:8px"></div>
+        <div style="color:var(--text);font-weight:600;border-top:1px solid rgba(0,0,0,.1);padding-top:8px;margin-top:4px">Monthly Payment</div>
+        <div id="la-monthly" class="td-mono" style="text-align:right;font-weight:700;font-size:16px;border-top:1px solid rgba(0,0,0,.1);padding-top:8px;margin-top:4px"></div>
+      </div>
+      <div style="margin-top:12px;border-top:1px solid rgba(0,0,0,.08);padding-top:10px">
+        <div style="font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:8px">💵 Net Release Breakdown</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+          <div style="color:var(--muted)">Gross Loan Amount</div><div id="la-gross" class="td-mono" style="text-align:right"></div>
+          <div style="color:var(--danger)">− Processing Fee (2%)</div><div id="la-proc-fee" class="td-mono" style="text-align:right;color:var(--danger)"></div>
+          <div style="color:var(--warning)">− Share Capital Allotment (5%)</div><div id="la-sc-allot" class="td-mono" style="text-align:right;color:var(--warning)"></div>
+          <div style="color:var(--text);font-weight:700;border-top:1px solid rgba(0,0,0,.1);padding-top:6px;margin-top:2px">Net Cash to Member</div>
+          <div id="la-net" class="td-mono" style="text-align:right;font-weight:700;font-size:15px;color:var(--accent2);border-top:1px solid rgba(0,0,0,.1);padding-top:6px;margin-top:2px"></div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--muted);background:rgba(26,107,42,.06);border-radius:6px;padding:7px 10px">
+          ℹ The 5% share capital allotment will be credited to the member's share capital account.
+        </div>
       </div>
     </div>
     <div class="field"><label>Note</label><input type="text" id="loan-note" placeholder="Purpose of loan"/></div>
@@ -483,6 +498,7 @@ tbody td{padding:13px 24px;font-size:13px}
   <div class="modal">
     <h3>Record Payment</h3><p>Update repayment for this loan</p>
     <div class="field"><label>Payment Amount (₱)</label><input type="number" id="pay-amount" placeholder="0.00"/></div>
+    <div class="field"><label>Note <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label><input type="text" id="pay-note" placeholder="e.g. Monthly payment, partial payment…"/></div>
     <input type="hidden" id="pay-loan-id"/>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('modal-pay')">Cancel</button>
@@ -527,6 +543,102 @@ tbody td{padding:13px 24px;font-size:13px}
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('modal-add-member')">Cancel</button>
       <button class="btn btn-gold" onclick="saveNewMember()">Add Member</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-add-old-member" class="modal-overlay" style="align-items:flex-start;padding:20px;overflow-y:auto">
+  <div class="modal" style="max-width:580px;width:100%;padding:0;overflow:hidden">
+    <div style="padding:22px 28px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:3px">📂 Add Old Member</h3>
+        <p style="font-size:12px;color:var(--muted);margin:0">Register an existing member with prior balances and loans</p>
+      </div>
+      <button class="btn-sm" onclick="closeModal('modal-add-old-member')">✕</button>
+    </div>
+    <div style="padding:24px 28px;overflow-y:auto;max-height:75vh">
+      <div id="add-old-member-err" class="login-err"></div>
+
+      <!-- Basic Info -->
+      <div class="sec-label" style="margin-bottom:14px">👤 Member Information</div>
+      <div class="grid-2f" style="gap:14px;margin-bottom:0">
+        <div class="field"><label>First Name</label><input type="text" id="aom-fname" placeholder="Juan"/></div>
+        <div class="field"><label>Last Name</label><input type="text" id="aom-lname" placeholder="Dela Cruz"/></div>
+      </div>
+      <div class="grid-2f" style="gap:14px">
+        <div class="field"><label>Email</label><input type="email" id="aom-email" placeholder="juan@email.com"/></div>
+        <div class="field"><label>Date Joined</label><input type="date" id="aom-date"/></div>
+      </div>
+
+      <!-- Share Capital -->
+      <div class="sec-label" style="margin-bottom:14px">🏛️ Share Capital</div>
+      <div class="field">
+        <label>Share Capital (₱)</label>
+        <input type="number" id="aom-share" placeholder="0.00" min="0" step="0.01"/>
+      </div>
+
+      <!-- Beginning Balance 2025 -->
+      <div class="sec-label" style="margin-bottom:14px">📊 Beginning Balance 2025</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px">
+        <div class="field" style="margin-bottom:14px">
+          <label>Beginning Balance Amount (₱)</label>
+          <input type="number" id="aom-bbal" placeholder="0.00" min="0" step="0.01"/>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Note <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="text" id="aom-bbal-note" placeholder="e.g. Beginning balance as of Jan 1, 2025"/>
+        </div>
+      </div>
+
+      <!-- Existing Loan -->
+      <div class="sec-label" style="margin-bottom:14px">🏦 Existing Loan <span style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(leave blank if none)</span></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px">
+        <div class="field">
+          <label>Loan Amount (₱)</label>
+          <input type="number" id="aom-loan" placeholder="0.00" min="0" step="0.01" oninput="updateAomLoanCalc()"/>
+        </div>
+        <div class="grid-2f" style="gap:14px">
+          <div class="field">
+            <label>Amount Already Repaid (₱)</label>
+            <input type="number" id="aom-loan-repaid" placeholder="0.00" min="0" step="0.01"/>
+          </div>
+          <div class="field">
+            <label>Interest Rate</label>
+            <select id="aom-loan-interest" onchange="updateAomLoanCalc()">
+              <option value="16">16%</option><option value="17">17%</option>
+              <option value="18" selected>18%</option><option value="19">19%</option><option value="20">20%</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2f" style="gap:14px">
+          <div class="field">
+            <label>Loan Start Date</label>
+            <input type="date" id="aom-loan-start"/>
+          </div>
+          <div class="field">
+            <label>Loan End / Due Date</label>
+            <input type="date" id="aom-loan-end"/>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Loan Note / Purpose</label>
+          <input type="text" id="aom-loan-note" placeholder="Purpose or description of the existing loan"/>
+        </div>
+        <!-- Computed preview -->
+        <div id="aom-loan-preview" style="display:none;margin-top:14px;background:var(--surface);border:1px solid rgba(26,107,42,.15);border-radius:10px;padding:12px 16px">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:10px">📋 Loan Preview</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+            <div style="color:var(--muted)">Monthly Payment</div><div id="aom-lp-monthly" class="td-mono" style="text-align:right;font-weight:700;color:var(--accent3)"></div>
+            <div style="color:var(--muted)">Total Payable</div><div id="aom-lp-total" class="td-mono" style="text-align:right"></div>
+            <div style="color:var(--muted)">Total Interest</div><div id="aom-lp-interest" class="td-mono" style="text-align:right;color:var(--warning)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:16px 28px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;background:var(--surface)">
+      <button class="btn btn-outline" style="width:auto;padding:10px 20px" onclick="closeModal('modal-add-old-member')">Cancel</button>
+      <button class="btn btn-gold" style="width:auto;padding:10px 28px" onclick="saveOldMember()">Save Old Member</button>
     </div>
   </div>
 </div>
@@ -599,41 +711,217 @@ tbody td{padding:13px 24px;font-size:13px}
   </div>
 </div>
 
-<div id="modal-db-settings" class="modal-overlay">
-  <div class="modal" style="max-width:500px">
-    <h3>🗄 Supabase Database</h3><p>Connect to your Supabase project for cloud storage.</p>
-    <div id="sb-status-msg" class="login-err"></div>
-    <div class="field"><label>Project URL</label><input type="text" id="sb-url-input" placeholder="https://xxxx.supabase.co"/></div>
-    <div class="field"><label>Anon / Public API Key</label><input type="password" id="sb-key-input"/></div>
-    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px">
-      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;font-weight:600">📋 SQL Schema</div>
-      <pre id="sql-schema" style="font-size:10px;color:#afc8af;background:#0a120a;border-radius:7px;padding:10px;overflow-x:auto;white-space:pre-wrap;line-height:1.5">create table users (
-  username text primary key, password text, role text,
-  fname text, lname text, email text, joined text,
-  status text, share_capital numeric default 0
-);
-create table collections (
-  id bigint primary key, username text, amount numeric,
-  year text, date text, note text, type text
-);
-create table loans (
-  id bigint primary key, username text, amount numeric,
-  repaid numeric default 0, date text, due_date text,
-  interest numeric, monthly_payment numeric,
-  total_payable numeric, note text, status text
-);
-alter table users enable row level security;
-alter table collections enable row level security;
-alter table loans enable row level security;
-create policy "Allow all" on users for all using (true) with check (true);
-create policy "Allow all" on collections for all using (true) with check (true);
-create policy "Allow all" on loans for all using (true) with check (true);</pre>
-      <button onclick="copySchema()" id="copy-schema-btn" style="margin-top:8px;padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif">📋 Copy SQL</button>
+<div id="modal-db-settings" class="modal-overlay" style="align-items:flex-start;padding:20px;overflow-y:auto">
+  <div class="modal" style="max-width:680px;width:100%;padding:0;overflow:hidden">
+    <div style="padding:22px 28px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:3px">🗄 Supabase Database Setup</h3>
+        <p style="font-size:12px;color:var(--muted);margin:0">Connect to your Supabase project for cloud storage and sync</p>
+      </div>
+      <button class="btn-sm" onclick="closeModal('modal-db-settings')">✕</button>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="disconnectDB()" style="color:var(--danger);border-color:rgba(201,76,76,.3)">Disconnect</button>
-      <button class="btn btn-outline" onclick="closeModal('modal-db-settings')">Cancel</button>
-      <button class="btn btn-gold" id="sb-test-btn" onclick="saveDBSettings()">Test & Save</button>
+    <div style="padding:24px 28px;overflow-y:auto;max-height:80vh">
+      <div id="sb-status-msg" class="login-err"></div>
+
+      <!-- Connection -->
+      <div class="sec-label" style="margin-bottom:14px">🔌 Connection</div>
+      <div class="field"><label>Project URL</label><input type="text" id="sb-url-input" placeholder="https://xxxxxxxxxxxx.supabase.co"/></div>
+      <div class="field"><label>Anon / Public API Key</label><input type="password" id="sb-key-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"/></div>
+
+      <!-- DB Credentials -->
+      <div class="sec-label" style="margin-bottom:14px">🔐 Database Connection Credentials</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+          Set a <strong style="color:var(--text)">username and password</strong> for this database connection. These are stored in the <code style="font-size:11px;background:rgba(26,107,42,.1);padding:1px 5px;border-radius:4px">db_credentials</code> table in Supabase and used to verify database access.
+        </div>
+        <div id="db-cred-status" style="display:none;border-radius:8px;padding:9px 14px;font-size:12px;margin-bottom:12px"></div>
+        <div class="grid-2f" style="gap:14px">
+          <div class="field" style="margin-bottom:0">
+            <label>DB Username</label>
+            <input type="text" id="db-cred-user" placeholder="e.g. sandugo_admin" autocomplete="off"/>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>DB Password</label>
+            <input type="password" id="db-cred-pass" placeholder="Strong password"/>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button onclick="saveDBCredentials()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--accent2);background:var(--accent2);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">💾 Save Credentials</button>
+          <button onclick="loadDBCredentials()" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">🔄 Load Current</button>
+          <button onclick="verifyDBCredentials()" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(155,110,204,.4);background:transparent;color:var(--purple);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">✓ Verify</button>
+        </div>
+        <div id="db-cred-list" style="margin-top:14px;display:none">
+          <div style="font-size:11px;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Saved Connections</div>
+          <div id="db-cred-rows"></div>
+        </div>
+      </div>
+
+      <!-- Setup guide -->
+      <div class="sec-label" style="margin-bottom:14px">📋 Database Setup Guide</div>
+      <div style="background:rgba(26,107,42,.06);border:1px solid rgba(26,107,42,.18);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;color:var(--text)">
+        <strong style="color:var(--accent2)">Step-by-step:</strong>
+        <ol style="margin:8px 0 0 16px;display:flex;flex-direction:column;gap:4px">
+          <li>Go to <strong>supabase.com</strong> → Create a new project</li>
+          <li>Open <strong>SQL Editor</strong> in the left sidebar</li>
+          <li>Copy the SQL below → Paste into the editor → Click <strong>Run</strong></li>
+          <li>Go to <strong>Project Settings → API</strong></li>
+          <li>Copy your <strong>Project URL</strong> and <strong>anon public key</strong></li>
+          <li>Paste both above and click <strong>Test & Connect</strong></li>
+        </ol>
+      </div>
+
+      <!-- SQL Schema tabs -->
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <button onclick="showSchemaTab('full')" id="stab-full" style="padding:6px 14px;border-radius:6px;border:1px solid var(--accent2);background:var(--accent2);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Full Schema</button>
+        <button onclick="showSchemaTab('users')" id="stab-users" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Users</button>
+        <button onclick="showSchemaTab('collections')" id="stab-collections" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Collections</button>
+        <button onclick="showSchemaTab('loans')" id="stab-loans" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Loans</button>
+        <button onclick="showSchemaTab('applications')" id="stab-applications" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Loan Applications</button>
+        <button onclick="showSchemaTab('dbcreds')" id="stab-dbcreds" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">DB Credentials</button>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px">
+        <pre id="sql-schema" style="font-size:10.5px;color:#2d5a1b;background:#f0f8f0;padding:16px;overflow-x:auto;white-space:pre;line-height:1.6;margin:0;max-height:320px;overflow-y:auto">-- ============================================================
+-- SANDUGO MULTIPURPOSE COOPERATIVE — Full Database Schema
+-- Run this entire script in Supabase SQL Editor
+-- ============================================================
+
+-- 1. USERS TABLE
+create table if not exists users (
+  username        text primary key,
+  password        text not null,
+  role            text not null default 'member',
+  fname           text,
+  lname           text,
+  email           text,
+  joined          text,
+  status          text default 'active',
+  share_capital   numeric default 0,
+  is_old_member   boolean default false
+);
+
+-- 2. COLLECTIONS TABLE
+create table if not exists collections (
+  id        bigint primary key,
+  username  text references users(username) on delete cascade,
+  amount    numeric not null,
+  year      text,
+  date      text,
+  note      text,
+  type      text default 'collection'
+);
+
+-- 3. LOANS TABLE
+create table if not exists loans (
+  id               bigint primary key,
+  username         text references users(username) on delete cascade,
+  amount           numeric not null,
+  repaid           numeric default 0,
+  date             text,
+  due_date         text,
+  interest         numeric default 18,
+  monthly_payment  numeric,
+  total_payable    numeric,
+  note             text,
+  status           text default 'active',
+  payments         jsonb default '[]',
+  processing_fee   numeric default 0,
+  sc_allotment     numeric default 0,
+  net_release      numeric,
+  from_application bigint,
+  is_imported      boolean default false
+);
+
+-- 4. LOAN APPLICATIONS TABLE
+create table if not exists loan_applications (
+  id               bigint primary key,
+  username         text references users(username) on delete cascade,
+  submitted_at     text,
+  name             text,
+  gender           text,
+  age              int,
+  address          text,
+  mobile           text,
+  income_source    text,
+  monthly_income   numeric,
+  monthly_expenses numeric,
+  loan_amount      numeric,
+  purpose          text,
+  notes            text,
+  status           text default 'pending',
+  reviewed_at      text,
+  loan_id          bigint
+);
+
+-- ============================================================
+-- ROW LEVEL SECURITY (required by Supabase)
+-- ============================================================
+alter table users             enable row level security;
+alter table collections       enable row level security;
+alter table loans             enable row level security;
+alter table loan_applications enable row level security;
+
+-- Allow all operations (adjust for production as needed)
+create policy "Allow all" on users             for all using (true) with check (true);
+create policy "Allow all" on collections       for all using (true) with check (true);
+create policy "Allow all" on loans             for all using (true) with check (true);
+create policy "Allow all" on loan_applications for all using (true) with check (true);
+
+-- 5. DATABASE CREDENTIALS TABLE
+create table if not exists db_credentials (
+  id         serial primary key,
+  db_user    text not null unique,
+  db_pass    text not null,
+  label      text default 'Main Connection',
+  created_at text
+);
+alter table db_credentials enable row level security;
+create policy "Allow all" on db_credentials for all using (true) with check (true);
+
+-- ============================================================
+-- INDEXES for performance
+-- ============================================================
+create index if not exists idx_collections_username on collections(username);
+create index if not exists idx_loans_username        on loans(username);
+create index if not exists idx_loans_status          on loans(status);
+create index if not exists idx_apps_username         on loan_applications(username);
+create index if not exists idx_apps_status           on loan_applications(status);</pre>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+        <button onclick="copySchema()" id="copy-schema-btn" style="padding:7px 16px;border-radius:7px;border:1px solid var(--accent2);background:transparent;color:var(--accent2);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📋 Copy Full SQL</button>
+        <button onclick="showSchemaTab('full')" style="padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">↺ Reset View</button>
+      </div>
+
+      <!-- Table summary -->
+      <div class="sec-label" style="margin-bottom:12px">📊 Tables Overview</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:6px">👥 users</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.8">username, password, role, fname, lname, email, joined, status, share_capital, is_old_member</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:6px">💰 collections</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.8">id, username, amount, year, date, note, type</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:6px">🏦 loans</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.8">id, username, amount, repaid, date, due_date, interest, monthly_payment, total_payable, note, status, payments (jsonb), processing_fee, sc_allotment, net_release, from_application, is_imported</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:6px">📋 loan_applications</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.8">id, username, submitted_at, name, gender, age, address, mobile, income_source, monthly_income, monthly_expenses, loan_amount, purpose, notes, status, reviewed_at, loan_id</div>
+        </div>
+        <div style="background:rgba(155,110,204,.06);border:1px solid rgba(155,110,204,.2);border-radius:10px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:6px">🔑 db_credentials</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.8">id (serial), db_user (unique), db_pass, label, created_at</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:16px 28px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;background:var(--surface);flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="disconnectDB()" style="width:auto;padding:9px 18px;font-size:13px;color:var(--danger);border-color:rgba(192,57,43,.3)">Disconnect</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-db-settings')" style="width:auto;padding:9px 18px;font-size:13px">Cancel</button>
+      <button class="btn btn-outline" id="sb-push-btn" onclick="pushAllDataToSupabase()" style="width:auto;padding:9px 18px;font-size:13px;color:var(--purple);border-color:rgba(155,110,204,.4);display:none">☁️ Push All Data</button>
+      <button class="btn btn-gold" id="sb-test-btn" onclick="saveDBSettings()" style="width:auto;padding:9px 24px;font-size:13px">🔌 Test & Connect</button>
     </div>
   </div>
 </div>
@@ -659,6 +947,32 @@ create policy "Allow all" on loans for all using (true) with check (true);</pre>
     <div style="padding:20px 28px;border-bottom:1px solid var(--border)"><div id="md-profile"></div></div>
     <div id="md-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border)"></div>
     <div style="padding:20px 28px 28px"><div class="sec-label" style="margin-bottom:14px">Loan History</div><div id="md-loans-list"></div></div>
+  </div>
+</div>
+
+<div id="modal-loan-detail" class="modal-overlay" style="align-items:flex-start;padding:20px;overflow-y:auto">
+  <div class="modal" style="max-width:640px;width:100%;padding:0;overflow:hidden">
+    <div style="padding:22px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--surface)">
+      <div>
+        <h3 id="ld-title" style="margin-bottom:2px;font-family:'Playfair Display',serif">Loan Details</h3>
+        <p id="ld-subtitle" style="margin:0;font-size:12px;color:var(--muted)"></p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="ld-pay-btn" class="btn btn-gold" style="width:auto;padding:7px 16px;font-size:12px;display:none" onclick="openPayFromDetail()">💳 Record Payment</button>
+        <button class="btn-sm" onclick="closeModal('modal-loan-detail')">✕</button>
+      </div>
+    </div>
+    <!-- Member banner -->
+    <div id="ld-member-banner" style="padding:18px 28px;border-bottom:1px solid var(--border);background:var(--surface2)"></div>
+    <!-- Loan summary stats -->
+    <div id="ld-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border)"></div>
+    <!-- Progress bar + details -->
+    <div id="ld-body" style="padding:22px 28px;border-bottom:1px solid var(--border)"></div>
+    <!-- Payment history -->
+    <div style="padding:20px 28px 28px;max-height:320px;overflow-y:auto">
+      <div class="sec-label" style="margin-bottom:14px">💳 Payment History</div>
+      <div id="ld-payments"></div>
+    </div>
   </div>
 </div>
 
@@ -697,6 +1011,89 @@ create policy "Allow all" on loans for all using (true) with check (true);</pre>
         <tbody id="amort-tbody"></tbody>
         <tfoot id="amort-tfoot"></tfoot>
       </table>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-my-loan-schedule" class="modal-overlay" style="align-items:flex-start;padding:20px;overflow-y:auto">
+  <div class="modal" style="max-width:660px;width:100%;padding:0;overflow:hidden">
+    <div style="padding:20px 26px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--surface)">
+      <div>
+        <h3 id="mls-title" style="margin-bottom:2px;font-family:'Playfair Display',serif;font-size:20px">Loan Schedule</h3>
+        <p id="mls-subtitle" style="margin:0;font-size:12px;color:var(--muted)"></p>
+      </div>
+      <button class="btn-sm" onclick="closeModal('modal-my-loan-schedule')">✕</button>
+    </div>
+    <!-- Summary strip -->
+    <div id="mls-summary" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border)"></div>
+    <!-- Progress bar -->
+    <div id="mls-progress-wrap" style="padding:16px 26px 0;border-bottom:1px solid var(--border);padding-bottom:16px"></div>
+    <!-- Schedule table -->
+    <div style="overflow-x:auto;padding:20px 26px 26px">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:var(--surface2)">
+            <th style="padding:10px 12px;text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">Month</th>
+            <th style="padding:10px 12px;text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">Due Date</th>
+            <th style="padding:10px 12px;text-align:right;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">Amount Due</th>
+            <th style="padding:10px 12px;text-align:right;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">Amount Paid</th>
+            <th style="padding:10px 12px;text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">Status</th>
+          </tr>
+        </thead>
+        <tbody id="mls-tbody"></tbody>
+      </table>
+    </div>
+    <!-- Actual payment history -->
+    <div style="padding:0 26px 26px">
+      <div class="sec-label" style="margin-bottom:12px">💳 Actual Payments Received</div>
+      <div id="mls-payments"></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-sync-progress" class="modal-overlay" style="align-items:center;justify-content:center;padding:24px">
+  <div class="modal" style="max-width:480px;width:100%;padding:0;overflow:hidden">
+    <div style="padding:22px 28px;border-bottom:1px solid var(--border);background:var(--surface)">
+      <h3 style="font-family:'Playfair Display',serif;font-size:19px;margin-bottom:3px">☁️ Syncing to Supabase</h3>
+      <p style="font-size:12px;color:var(--muted);margin:0">Uploading all data to the cloud database…</p>
+    </div>
+    <div style="padding:24px 28px">
+      <div id="sync-overall-bar-wrap" style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px">
+          <span>Overall Progress</span><span id="sync-pct">0%</span>
+        </div>
+        <div style="background:var(--border);border-radius:100px;height:10px;overflow:hidden">
+          <div id="sync-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent3));border-radius:100px;transition:width .3s"></div>
+        </div>
+      </div>
+      <div id="sync-steps" style="display:flex;flex-direction:column;gap:8px">
+        <div id="sync-step-users" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:var(--surface2)">
+          <span id="sync-icon-users" style="font-size:16px">⏳</span>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">Users & Members</div><div id="sync-detail-users" style="font-size:11px;color:var(--muted)">Waiting…</div></div>
+          <span id="sync-count-users" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)"></span>
+        </div>
+        <div id="sync-step-collections" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:var(--surface2)">
+          <span id="sync-icon-collections" style="font-size:16px">⏳</span>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">Collections</div><div id="sync-detail-collections" style="font-size:11px;color:var(--muted)">Waiting…</div></div>
+          <span id="sync-count-collections" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)"></span>
+        </div>
+        <div id="sync-step-loans" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:var(--surface2)">
+          <span id="sync-icon-loans" style="font-size:16px">⏳</span>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">Loans</div><div id="sync-detail-loans" style="font-size:11px;color:var(--muted)">Waiting…</div></div>
+          <span id="sync-count-loans" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)"></span>
+        </div>
+        <div id="sync-step-apps" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:var(--surface2)">
+          <span id="sync-icon-apps" style="font-size:16px">⏳</span>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">Loan Applications</div><div id="sync-detail-apps" style="font-size:11px;color:var(--muted)">Waiting…</div></div>
+          <span id="sync-count-apps" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)"></span>
+        </div>
+      </div>
+      <div id="sync-result" style="display:none;margin-top:16px;padding:12px 16px;border-radius:10px;font-size:13px"></div>
+    </div>
+    <div style="padding:14px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;background:var(--surface)">
+      <button id="sync-done-btn" onclick="closeModal('modal-sync-progress')" style="padding:9px 24px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;display:none">Close</button>
     </div>
   </div>
 </div>
@@ -746,7 +1143,7 @@ const DB={
   saveUsers(u){ localStorage.setItem('sandugo_users',JSON.stringify(u)); },
   getCollections(){ return JSON.parse(localStorage.getItem('sandugo_coll')||'[]'); },
   saveCollections(c){ localStorage.setItem('sandugo_coll',JSON.stringify(c)); },
-  getLoans(){ return JSON.parse(localStorage.getItem('sandugo_loans')||'[]'); },
+  getLoans(){ return (JSON.parse(localStorage.getItem('sandugo_loans')||'[]')).map(l=>({...l,payments:Array.isArray(l.payments)?l.payments:[]})); },
   saveLoans(l){ localStorage.setItem('sandugo_loans',JSON.stringify(l)); },
 
   async fetchAll(){
@@ -755,7 +1152,7 @@ const DB={
       showDBStatus('loading');
       const [users,collections,loans]=await Promise.all([sbFetch('users?select=*'),sbFetch('collections?select=*'),sbFetch('loans?select=*')]);
       const mapU=u=>({...u,shareCapital:u.share_capital??u.shareCapital??0});
-      const mapL=l=>({...l,dueDate:l.due_date??l.dueDate,monthlyPayment:l.monthly_payment??l.monthlyPayment,totalPayable:l.total_payable??l.totalPayable,fromApplication:l.from_application??l.fromApplication??null});
+      const mapL=l=>({...l,dueDate:l.due_date??l.dueDate,monthlyPayment:l.monthly_payment??l.monthlyPayment,totalPayable:l.total_payable??l.totalPayable,fromApplication:l.from_application??l.fromApplication??null,payments:Array.isArray(l.payments)?l.payments:(l.payments?JSON.parse(l.payments):[]),processingFee:l.processing_fee??l.processingFee??Math.round((l.amount||0)*0.02*100)/100,scAllotment:l.sc_allotment??l.scAllotment??Math.round((l.amount||0)*0.05*100)/100,netRelease:l.net_release??l.netRelease??Math.max(0,(l.amount||0)-(l.processing_fee??Math.round((l.amount||0)*0.02*100)/100)-(l.sc_allotment??Math.round((l.amount||0)*0.05*100)/100))});
       const fetchedUsers=users.map(mapU);
       // Protect local admin password — never overwrite from Supabase
       const localUsers=this.getUsers();
@@ -779,7 +1176,7 @@ const DB={
   async pushAllUsers(){ if(!useSupabase) return; for(const u of this.getUsers()) await this.pushUser(u); },
   async pushCollection(c){ if(!useSupabase) return; try{ await sbFetch('collections?id=eq.'+c.id,'DELETE'); await sbFetch('collections','POST',c); }catch(e){ toast('⚠️ Collection sync failed: '+e.message); } },
   async deleteCollection(id){ if(!useSupabase) return; try{ await sbFetch('collections?id=eq.'+id,'DELETE'); }catch(e){} },
-  async pushLoan(l){ if(!useSupabase) return; const row={id:l.id,username:l.username,amount:l.amount,repaid:l.repaid,date:l.date,due_date:l.dueDate,interest:l.interest,monthly_payment:l.monthlyPayment,total_payable:l.totalPayable,note:l.note||'',status:l.status,from_application:l.fromApplication||null}; try{ await sbFetch('loans?id=eq.'+l.id,'DELETE'); await sbFetch('loans','POST',row); }catch(e){ toast('⚠️ Loan sync failed: '+e.message); } },
+  async pushLoan(l){ if(!useSupabase) return; const row={id:l.id,username:l.username,amount:l.amount,repaid:l.repaid,date:l.date,due_date:l.dueDate,interest:l.interest,monthly_payment:l.monthlyPayment,total_payable:l.totalPayable,note:l.note||'',status:l.status,from_application:l.fromApplication||null,payments:JSON.stringify(l.payments||[]),processing_fee:l.processingFee||Math.round(l.amount*0.02*100)/100,sc_allotment:l.scAllotment||Math.round(l.amount*0.05*100)/100,net_release:l.netRelease!=null?l.netRelease:Math.max(0,l.amount-(l.processingFee||l.amount*0.02)-(l.scAllotment||l.amount*0.05))}; try{ await sbFetch('loans?id=eq.'+l.id,'DELETE'); await sbFetch('loans','POST',row); }catch(e){ toast('⚠️ Loan sync failed: '+e.message); } },
   async deleteLoan(id){ if(!useSupabase) return; try{ await sbFetch('loans?id=eq.'+id,'DELETE'); }catch(e){} },
 };
 
@@ -804,7 +1201,19 @@ function showDBStatus(state,msg=''){
 }
 
 // ── SUPABASE SETTINGS ──
-function openDBSettings(){ setVal('sb-url-input',SUPABASE_URL); setVal('sb-key-input',SUPABASE_KEY); document.getElementById('sb-status-msg').style.display='none'; openModal('modal-db-settings'); }
+function openDBSettings(){
+  setVal('sb-url-input',SUPABASE_URL);
+  setVal('sb-key-input',SUPABASE_KEY);
+  document.getElementById('sb-status-msg').style.display='none';
+  document.getElementById('db-cred-status').style.display='none';
+  document.getElementById('db-cred-list').style.display='none';
+  setVal('db-cred-user',''); setVal('db-cred-pass','');
+  // Show push button only when connected
+  const pushBtn=document.getElementById('sb-push-btn');
+  if(pushBtn) pushBtn.style.display=useSupabase?'inline-block':'none';
+  openModal('modal-db-settings');
+  if(useSupabase) loadDBCredentials();
+}
 async function saveDBSettings(){
   const url=val('sb-url-input').replace(/\/$/,''), key=val('sb-key-input');
   const msg=document.getElementById('sb-status-msg');
@@ -818,14 +1227,384 @@ async function saveDBSettings(){
     SUPABASE_URL=url; SUPABASE_KEY=key;
     localStorage.setItem('sb_url',url); localStorage.setItem('sb_key',key);
     useSupabase=true;
-    closeModal('modal-db-settings'); toast('✓ Supabase connected!');
+    toast('✓ Supabase connected!');
     showDBStatus('loading'); await DB.fetchAll();
     if(currentUser) currentUser.role==='admin'?renderAdminOverview():renderMemberHome();
+    // Show push button now that we're connected
+    const pb=document.getElementById('sb-push-btn');
+    if(pb) pb.style.display='inline-block';
+    document.getElementById('sb-status-msg').style.display='block';
+    document.getElementById('sb-status-msg').style.background='rgba(13,158,126,.08)';
+    document.getElementById('sb-status-msg').style.border='1px solid rgba(13,158,126,.2)';
+    document.getElementById('sb-status-msg').style.color='var(--accent3)';
+    document.getElementById('sb-status-msg').textContent='✓ Connected! Click "☁️ Push All Data" to upload your local data to Supabase.';
+    loadDBCredentials();
   }catch(e){ showErr(msg,e.message); }
   finally{ btn.textContent='Test & Save'; }
 }
 function disconnectDB(){ SUPABASE_URL=''; SUPABASE_KEY=''; useSupabase=false; localStorage.removeItem('sb_url'); localStorage.removeItem('sb_key'); closeModal('modal-db-settings'); showDBStatus('offline'); toast('Disconnected. Using local storage.'); }
-function copySchema(){ navigator.clipboard.writeText(document.getElementById('sql-schema').textContent).then(()=>{ document.getElementById('copy-schema-btn').textContent='✓ Copied!'; setTimeout(()=>document.getElementById('copy-schema-btn').textContent='📋 Copy SQL',2000); }); }
+
+
+
+// ── PUSH ALL DATA TO SUPABASE ──
+async function pushAllDataToSupabase(){
+  if(!useSupabase){ toast('⚠️ Not connected to Supabase.'); return; }
+  openModal('modal-sync-progress');
+  // Reset UI
+  const steps=['users','collections','loans','apps'];
+  steps.forEach(s=>{
+    document.getElementById('sync-icon-'+s).textContent='⏳';
+    document.getElementById('sync-detail-'+s).textContent='Waiting…';
+    document.getElementById('sync-count-'+s).textContent='';
+    document.getElementById('sync-step-'+s).style.background='var(--surface2)';
+  });
+  document.getElementById('sync-bar').style.width='0%';
+  document.getElementById('sync-pct').textContent='0%';
+  document.getElementById('sync-result').style.display='none';
+  document.getElementById('sync-done-btn').style.display='none';
+
+  const setStep=(s,icon,detail,count,bg)=>{
+    document.getElementById('sync-icon-'+s).textContent=icon;
+    document.getElementById('sync-detail-'+s).textContent=detail;
+    if(count!==undefined) document.getElementById('sync-count-'+s).textContent=count;
+    if(bg) document.getElementById('sync-step-'+s).style.background=bg;
+  };
+  const setProgress=(pct)=>{
+    document.getElementById('sync-bar').style.width=pct+'%';
+    document.getElementById('sync-pct').textContent=Math.round(pct)+'%';
+  };
+
+  let errors=[];
+  let totalPushed=0;
+
+  // ── STEP 1: Users ──
+  setStep('users','🔄','Uploading users…','','rgba(26,107,42,.06)');
+  setProgress(5);
+  try{
+    const users=DB.getUsers();
+    // Clear existing and re-insert all
+    await sbFetch('users?username=neq.___NONE___','DELETE'); // delete all
+    let uCount=0;
+    for(const u of users){
+      const row={
+        username:u.username,password:u.password,role:u.role,
+        fname:u.fname||'',lname:u.lname||'',email:u.email||'',
+        joined:u.joined||today(),status:u.status||'active',
+        share_capital:Number(u.shareCapital)||0,
+        is_old_member:!!u.isOldMember
+      };
+      try{ await sbFetch('users','POST',row); uCount++; }
+      catch(e){ errors.push('User '+u.username+': '+e.message); }
+    }
+    setStep('users','✅','Done',uCount+' record'+(uCount!==1?'s':''),'rgba(13,158,126,.06)');
+    totalPushed+=uCount;
+    setProgress(25);
+  }catch(e){
+    setStep('users','❌','Failed: '+e.message,'','rgba(192,57,43,.06)');
+    errors.push('Users: '+e.message);
+    setProgress(25);
+  }
+
+  // ── STEP 2: Collections ──
+  setStep('collections','🔄','Uploading collections…','','rgba(26,107,42,.06)');
+  try{
+    const colls=DB.getCollections();
+    await sbFetch('collections?id=gt.0','DELETE'); // delete all
+    let cCount=0;
+    for(const c of colls){
+      try{ await sbFetch('collections','POST',{id:c.id,username:c.username,amount:Number(c.amount)||0,year:c.year||'',date:c.date||today(),note:c.note||'',type:c.type||'collection'}); cCount++; }
+      catch(e){ errors.push('Collection '+c.id+': '+e.message); }
+    }
+    setStep('collections','✅','Done',cCount+' record'+(cCount!==1?'s':''),'rgba(13,158,126,.06)');
+    totalPushed+=cCount;
+    setProgress(50);
+  }catch(e){
+    setStep('collections','❌','Failed: '+e.message,'','rgba(192,57,43,.06)');
+    errors.push('Collections: '+e.message);
+    setProgress(50);
+  }
+
+  // ── STEP 3: Loans ──
+  setStep('loans','🔄','Uploading loans…','','rgba(26,107,42,.06)');
+  try{
+    const loans=DB.getLoans();
+    await sbFetch('loans?id=gt.0','DELETE'); // delete all
+    let lCount=0;
+    for(const l of loans){
+      const PROC=l.processingFee||Math.round(Number(l.amount)*0.02*100)/100;
+      const SCA=l.scAllotment||Math.round(Number(l.amount)*0.05*100)/100;
+      const row={
+        id:l.id,username:l.username,amount:Number(l.amount)||0,
+        repaid:Number(l.repaid)||0,date:l.date||today(),
+        due_date:l.dueDate||'',interest:Number(l.interest)||18,
+        monthly_payment:Number(l.monthlyPayment)||0,
+        total_payable:Number(l.totalPayable)||0,
+        note:l.note||'',status:l.status||'active',
+        payments:JSON.stringify(l.payments||[]),
+        processing_fee:PROC,sc_allotment:SCA,
+        net_release:l.netRelease!=null?Number(l.netRelease):Math.max(0,Number(l.amount)-PROC-SCA),
+        from_application:l.fromApplication||null,
+        is_imported:!!l.isImported
+      };
+      try{ await sbFetch('loans','POST',row); lCount++; }
+      catch(e){ errors.push('Loan '+l.id+': '+e.message); }
+    }
+    setStep('loans','✅','Done',lCount+' record'+(lCount!==1?'s':''),'rgba(13,158,126,.06)');
+    totalPushed+=lCount;
+    setProgress(75);
+  }catch(e){
+    setStep('loans','❌','Failed: '+e.message,'','rgba(192,57,43,.06)');
+    errors.push('Loans: '+e.message);
+    setProgress(75);
+  }
+
+  // ── STEP 4: Loan Applications ──
+  setStep('apps','🔄','Uploading loan applications…','','rgba(26,107,42,.06)');
+  try{
+    const apps=JSON.parse(localStorage.getItem('sandugo_loan_apps')||'[]');
+    // Try to delete — silently skip if table doesn't exist
+    try{ await sbFetch('loan_applications?id=gt.0','DELETE'); }catch(e){}
+    let aCount=0;
+    for(const a of apps){
+      const row={
+        id:a.id,username:a.username,submitted_at:a.submittedAt||new Date().toISOString(),
+        name:a.name||'',gender:a.gender||'',age:Number(a.age)||0,
+        address:a.address||'',mobile:a.mobile||'',
+        income_source:a.incomeSource||'',
+        monthly_income:Number(a.monthlyIncome)||0,
+        monthly_expenses:Number(a.monthlyExpenses)||0,
+        loan_amount:Number(a.loanAmount)||0,
+        purpose:a.purpose||'',notes:a.notes||'',
+        status:a.status||'pending',
+        reviewed_at:a.reviewedAt||null,
+        loan_id:a.loanId||null
+      };
+      try{ await sbFetch('loan_applications','POST',row); aCount++; }
+      catch(e){ /* silently skip if table missing */ }
+    }
+    setStep('apps','✅','Done',aCount+' record'+(aCount!==1?'s':''),'rgba(13,158,126,.06)');
+    totalPushed+=aCount;
+    setProgress(100);
+  }catch(e){
+    setStep('apps','⚠️','Skipped (table may not exist)','','rgba(232,160,32,.06)');
+    setProgress(100);
+  }
+
+  // ── Result ──
+  const resultEl=document.getElementById('sync-result');
+  resultEl.style.display='block';
+  if(errors.length===0){
+    resultEl.style.background='rgba(13,158,126,.08)';
+    resultEl.style.border='1px solid rgba(13,158,126,.2)';
+    resultEl.style.color='var(--accent3)';
+    resultEl.innerHTML='<strong>✅ All data uploaded successfully!</strong> '+totalPushed+' total records pushed to Supabase.';
+  } else {
+    resultEl.style.background='rgba(232,160,32,.08)';
+    resultEl.style.border='1px solid rgba(232,160,32,.2)';
+    resultEl.style.color='var(--warning)';
+    resultEl.innerHTML='<strong>⚠️ Completed with '+errors.length+' error'+(errors.length!==1?'s':'')+'.</strong> '+totalPushed+' records pushed.<br><small style="color:var(--muted)">'+errors.slice(0,3).join(' · ')+(errors.length>3?' …':'')+'</small>';
+  }
+  document.getElementById('sync-done-btn').style.display='inline-block';
+  toast(errors.length===0?'✅ All data pushed to Supabase!':'⚠️ Push completed with some errors.');
+}
+
+// ── DB CREDENTIALS ──
+function dbCredMsg(msg, type='info'){
+  const el=document.getElementById('db-cred-status');
+  const styles={
+    info: {bg:'rgba(26,107,42,.08)',border:'rgba(26,107,42,.2)',color:'var(--accent2)'},
+    success: {bg:'rgba(13,158,126,.08)',border:'rgba(13,158,126,.2)',color:'var(--accent3)'},
+    error: {bg:'rgba(192,57,43,.08)',border:'rgba(192,57,43,.25)',color:'var(--danger)'},
+  };
+  const s=styles[type]||styles.info;
+  el.style.display='block';
+  el.style.background=s.bg;
+  el.style.border='1px solid '+s.border;
+  el.style.color=s.color;
+  el.textContent=msg;
+}
+
+async function saveDBCredentials(){
+  const dbUser=val('db-cred-user'), dbPass=val('db-cred-pass');
+  if(!dbUser||!dbPass){ dbCredMsg('Username and password are required.','error'); return; }
+  if(!useSupabase){ dbCredMsg('Connect to Supabase first before saving credentials.','error'); return; }
+  try{
+    // Check if user already exists
+    const existing=await sbFetch('db_credentials?db_user=eq.'+encodeURIComponent(dbUser)+'&select=id');
+    if(existing&&existing.length>0){
+      // Update existing
+      await sbFetch('db_credentials?db_user=eq.'+encodeURIComponent(dbUser),'DELETE');
+    }
+    const now=new Date().toISOString();
+    await sbFetch('db_credentials','POST',{db_user:dbUser,db_pass:dbPass,label:'Main Connection',created_at:now});
+    dbCredMsg('✓ Credentials saved successfully.','success');
+    loadDBCredentials();
+    toast('✓ DB credentials saved.');
+  }catch(e){
+    // Table might not exist yet
+    if(e.message.includes('42P01')||e.message.includes('does not exist')){
+      dbCredMsg('⚠ db_credentials table not found. Run the SQL schema first.','error');
+    } else {
+      dbCredMsg('Error: '+e.message,'error');
+    }
+  }
+}
+
+async function loadDBCredentials(){
+  if(!useSupabase) return;
+  const listEl=document.getElementById('db-cred-list');
+  const rowsEl=document.getElementById('db-cred-rows');
+  try{
+    const rows=await sbFetch('db_credentials?select=*&order=id.asc');
+    if(!rows||rows.length===0){
+      listEl.style.display='none';
+      return;
+    }
+    listEl.style.display='block';
+    rowsEl.innerHTML=rows.map(r=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:6px;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#1a5f2a);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0">🔑</div>
+          <div>
+            <div style="font-weight:700;font-size:13px;font-family:'DM Mono',monospace">${r.db_user}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:1px">${r.label||'Connection'} · Created ${r.created_at?new Date(r.created_at).toLocaleDateString('en-PH'):''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button onclick="fillDBCred('${r.db_user}')" style="padding:5px 12px;border-radius:6px;border:1px solid var(--accent2);background:transparent;color:var(--accent2);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif">Use</button>
+          <button onclick="deleteDBCredential(${r.id})" style="padding:5px 12px;border-radius:6px;border:1px solid rgba(192,57,43,.3);background:transparent;color:var(--danger);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif">Delete</button>
+        </div>
+      </div>`).join('');
+  }catch(e){
+    // Table doesn't exist yet, silently ignore
+    listEl.style.display='none';
+  }
+}
+
+function fillDBCred(dbUser){
+  setVal('db-cred-user',dbUser);
+  setVal('db-cred-pass','');
+  document.getElementById('db-cred-pass').focus();
+  dbCredMsg('Enter the password for "'+dbUser+'" to verify or update.','info');
+}
+
+async function verifyDBCredentials(){
+  const dbUser=val('db-cred-user'), dbPass=val('db-cred-pass');
+  if(!dbUser||!dbPass){ dbCredMsg('Enter username and password to verify.','error'); return; }
+  if(!useSupabase){ dbCredMsg('Not connected to Supabase.','error'); return; }
+  try{
+    const rows=await sbFetch('db_credentials?db_user=eq.'+encodeURIComponent(dbUser)+'&db_pass=eq.'+encodeURIComponent(dbPass)+'&select=id,db_user,label');
+    if(rows&&rows.length>0){
+      dbCredMsg('✓ Credentials verified — "'+dbUser+'" is valid.','success');
+      toast('✓ DB credentials verified.');
+    } else {
+      dbCredMsg('✗ Invalid username or password.','error');
+    }
+  }catch(e){ dbCredMsg('Error: '+e.message,'error'); }
+}
+
+async function deleteDBCredential(id){
+  if(!useSupabase) return;
+  if(!confirm('Delete this DB credential?')) return;
+  try{
+    await sbFetch('db_credentials?id=eq.'+id,'DELETE');
+    loadDBCredentials();
+    toast('Credential deleted.');
+  }catch(e){ toast('Error: '+e.message); }
+}
+
+// ── DB SCHEMA TABS ──
+function showSchemaTab(tab){
+  const _schemas={full:document.getElementById('sql-schema').textContent,users:`-- USERS TABLE
+create table if not exists users (
+  username        text primary key,
+  password        text not null,
+  role            text not null default 'member',
+  fname           text,
+  lname           text,
+  email           text,
+  joined          text,
+  status          text default 'active',
+  share_capital   numeric default 0,
+  is_old_member   boolean default false
+);
+alter table users enable row level security;
+create policy "Allow all" on users for all using (true) with check (true);`,collections:`-- COLLECTIONS TABLE
+create table if not exists collections (
+  id        bigint primary key,
+  username  text references users(username) on delete cascade,
+  amount    numeric not null,
+  year      text,
+  date      text,
+  note      text,
+  type      text default 'collection'
+);
+alter table collections enable row level security;
+create policy "Allow all" on collections for all using (true) with check (true);
+create index if not exists idx_collections_username on collections(username);`,loans:`-- LOANS TABLE
+create table if not exists loans (
+  id               bigint primary key,
+  username         text references users(username) on delete cascade,
+  amount           numeric not null,
+  repaid           numeric default 0,
+  date             text,
+  due_date         text,
+  interest         numeric default 18,
+  monthly_payment  numeric,
+  total_payable    numeric,
+  note             text,
+  status           text default 'active',
+  payments         jsonb default '[]',
+  processing_fee   numeric default 0,
+  sc_allotment     numeric default 0,
+  net_release      numeric,
+  from_application bigint,
+  is_imported      boolean default false
+);
+alter table loans enable row level security;
+create policy "Allow all" on loans for all using (true) with check (true);
+create index if not exists idx_loans_username on loans(username);
+create index if not exists idx_loans_status   on loans(status);`,applications:`-- LOAN APPLICATIONS TABLE
+create table if not exists loan_applications (
+  id               bigint primary key,
+  username         text references users(username) on delete cascade,
+  submitted_at     text,
+  name             text,
+  gender           text,
+  age              int,
+  address          text,
+  mobile           text,
+  income_source    text,
+  monthly_income   numeric,
+  monthly_expenses numeric,
+  loan_amount      numeric,
+  purpose          text,
+  notes            text,
+  status           text default 'pending',
+  reviewed_at      text,
+  loan_id          bigint
+);
+alter table loan_applications enable row level security;
+create policy "Allow all" on loan_applications for all using (true) with check (true);
+create index if not exists idx_apps_username on loan_applications(username);
+create index if not exists idx_apps_status   on loan_applications(status);`,dbcreds:`-- DB CREDENTIALS TABLE\ncreate table if not exists db_credentials (\n  id         serial primary key,\n  db_user    text not null unique,\n  db_pass    text not null,\n  label      text default 'Main Connection',\n  created_at text\n);\nalter table db_credentials enable row level security;\ncreate policy \"Allow all\" on db_credentials for all using (true) with check (true);`};
+  const pre=document.getElementById('sql-schema');
+  if(_schemas[tab]) pre.textContent=_schemas[tab];
+  // Update tab button styles
+  ['full','users','collections','loans','applications'].forEach(t=>{
+    const btn=document.getElementById('stab-'+t);
+    if(!btn) return;
+    if(t===tab){
+      btn.style.background='var(--accent2)'; btn.style.color='#fff';
+      btn.style.borderColor='var(--accent2)';
+    } else {
+      btn.style.background='transparent'; btn.style.color='var(--muted)';
+      btn.style.borderColor='var(--border)';
+    }
+  });
+}
+
+function copySchema(){ const txt=document.getElementById('sql-schema').textContent; navigator.clipboard.writeText(txt).then(()=>{ const btn=document.getElementById('copy-schema-btn'); btn.textContent='✓ Copied!'; btn.style.background='var(--accent2)'; btn.style.color='#fff'; setTimeout(()=>{ btn.textContent='📋 Copy Full SQL'; btn.style.background=''; btn.style.color='var(--accent2)'; },2000); }); }
 async function manualSync(){ if(!useSupabase){ toast('⚠️ No Supabase connection.'); return; } await DB.fetchAll(); if(currentUser) renderAdminOverview(); toast('✓ Synced from Supabase.'); }
 
 // ── EXPORT / IMPORT ──
@@ -1004,21 +1783,39 @@ function renderAdminOverview(){
     statCard('sc-red','🏦','Total Loaned','₱ '+fmt(totalLoaned),'mono')+
     statCard('sc-gold','⚖️','Outstanding','₱ '+fmt(totalLoaned-totalRepaid),'mono');
   const recent=[...users].sort((a,b)=>(b.joined||'').localeCompare(a.joined||'')).slice(0,5);
-  document.getElementById('recent-members-tbody').innerHTML=recent.map((u,i)=>`
-    <tr><td>${i+1}</td>
-    <td><button onclick="openMemberDetail('${u.username}')" style="background:none;border:none;color:var(--accent3);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;text-decoration:underline dotted;padding:0">${u.fname} ${u.lname}</button></td>
+  document.getElementById('recent-members-tbody').innerHTML=recent.map((u,i)=>{
+    const sc=Number(u.shareCapital)||0;
+    const subs=Math.floor(sc/10000);
+    return `<tr><td>${i+1}</td>
+    <td><button onclick="openMemberDetail('${u.username}')" style="background:none;border:none;color:var(--accent2);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;text-decoration:underline dotted;padding:0;font-weight:600">${u.fname} ${u.lname}</button></td>
     <td style="color:var(--muted)">${u.email||'—'}</td>
-    <td class="td-mono">${u.shareCapital!=null?'₱ '+fmt(u.shareCapital):'—'}</td>
-    <td class="td-mono">${u.joined||'—'}</td><td><span class="badge b-green">Active</span></td></tr>`).join('');
+    <td class="td-mono" style="color:var(--accent);font-weight:700">${sc>0?'₱ '+fmt(sc):'—'}</td>
+    <td><span style="font-size:12px;font-weight:700;color:var(--accent2)">${subs}</span><span style="font-size:11px;color:var(--muted)"> sub${subs!==1?'s':''}</span>${subs>0?`<div style="display:flex;gap:3px;margin-top:3px">${Array.from({length:Math.min(subs,6)}).map((_,j)=>`<span style="width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#1a5f2a);display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#fff">${j+1}</span>`).join('')}${subs>6?`<span style="font-size:9px;color:var(--muted)">+${subs-6}</span>`:''}</div>`:''}</td>
+    <td class="td-mono">${u.joined||'—'}</td><td><span class="badge b-green">Active</span></td></tr>`;
+  }).join('');
 }
 
 function renderMembersTable(filter=''){
   const users=DB.getUsers().filter(u=>u.role==='member'&&(u.fname+' '+u.lname+' '+u.username+' '+(u.email||'')).toLowerCase().includes(filter.toLowerCase()));
-  document.getElementById('members-tbody').innerHTML=users.map(u=>`
-    <tr><td>${u.fname} ${u.lname}</td><td class="td-mono">${u.username}</td><td>${u.email||'—'}</td>
-    <td class="td-mono">${u.joined||'—'}</td><td><span class="badge b-green">Active</span></td>
-    <td><button class="action-btn del" onclick="openDelete('${u.username}')">Delete</button></td></tr>`)
-    .join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px">No members found</td></tr>';
+  document.getElementById('members-tbody').innerHTML=users.map(u=>{
+    const sc=Number(u.shareCapital)||0;
+    const subs=Math.floor(sc/10000);
+    const rem=sc%10000;
+    const subsHtml=subs>0
+      ?`<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">${Array.from({length:Math.min(subs,10)}).map((_,i)=>`<span title="Subscription ${i+1}: ₱${(10000).toLocaleString()}" style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#1a5f2a);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">${i+1}</span>`).join('')}${subs>10?`<span style="font-size:11px;color:var(--muted)">+${subs-10}</span>`:''}</div><div style="font-size:11px;color:var(--accent2);font-weight:600;margin-top:3px">${subs} sub${subs!==1?'s':''} ${rem>0?'<span style="color:var(--muted);font-weight:400">+₱'+fmt(rem)+'</span>':''}</div>`
+      :`<span style="font-size:11px;color:var(--muted)">—</span>`;
+    return `<tr>
+      <td><button onclick="openMemberDetail('${u.username}')" style="background:none;border:none;color:var(--accent2);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;text-decoration:underline dotted;padding:0;font-weight:600;text-align:left">${u.fname} ${u.lname}</button></td>
+      <td class="td-mono">${u.username}</td>
+      <td>${u.email||'—'}</td>
+      <td><div class="td-mono" style="font-weight:700;color:var(--accent)">₱ ${fmt(sc)}</div></td>
+      <td>${subsHtml}</td>
+      <td class="td-mono">${u.joined||'—'}</td>
+      <td><span class="badge b-green">Active</span></td>
+      <td><button class="action-btn del" onclick="openDelete('${u.username}')">Delete</button></td>
+    </tr>`;
+  })
+    .join('')||'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:28px">No members found</td></tr>';
 }
 function filterMembers(v){ renderMembersTable(v); }
 function openDelete(username){ document.getElementById('del-username').value=username; openModal('modal-del'); }
@@ -1090,6 +1887,129 @@ async function confirmDeleteColl(){
   closeModal('modal-del-coll'); renderCollections(); toast('Collection record deleted.');
 }
 
+// ── LOAN DETAIL MODAL ──
+let _loanDetailId=null;
+function openLoanDetail(id){
+  const loan=DB.getLoans().find(l=>l.id===id); if(!loan) return;
+  _loanDetailId=id;
+  const u=DB.getUsers().find(x=>x.username===loan.username);
+  const bal=Number(loan.amount)-Number(loan.repaid);
+  const pct=Number(loan.amount)>0?Math.min(100,Math.round((Number(loan.repaid)/Number(loan.amount))*100)):0;
+  const ds=loanDueStatus(loan);
+  const barColor=ds==='pastdue'?'var(--danger)':ds==='due'?'var(--warning)':'var(--accent3)';
+  const initials=u?(u.fname?.[0]||'')+(u.lname?.[0]||''):'?';
+
+  // Header
+  document.getElementById('ld-title').textContent='Loan — ₱ '+fmt(loan.amount);
+  document.getElementById('ld-subtitle').textContent='Issued '+( loan.date||'—')+' · '+( loan.interest||18)+'% p.a. · 6-month term';
+
+  // Pay button visibility
+  const payBtn=document.getElementById('ld-pay-btn');
+  payBtn.style.display=loan.status==='active'?'inline-block':'none';
+  payBtn.setAttribute('data-loan-id',id);
+
+  // Member banner
+  const colls=DB.getCollections().filter(c=>c.username===loan.username);
+  const allLoans=DB.getLoans().filter(l=>l.username===loan.username);
+  const totalBorrowed=allLoans.reduce((a,l)=>a+Number(l.amount),0);
+  const sc=u?Number(u.shareCapital)||0:0;
+  document.getElementById('ld-member-banner').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#2a5f94);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;flex-shrink:0">${initials}</div>
+      <div style="flex:1;min-width:180px">
+        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700">${u?u.fname+' '+u.lname:loan.username}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${u?u.email||'':''} · Member since ${u?u.joined||'—':'—'}</div>
+        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+          <span class="badge b-green">Active</span>
+          <span class="badge b-blue">Member</span>
+          ${loan.fromApplication?'<span class="badge b-green">📋 Via Application</span>':''}
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Share Capital</div>
+          <div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--accent);font-size:13px;margin-top:2px">₱ ${fmt(sc)}</div>
+        </div>
+        <div style="text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Total Loans</div>
+          <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:13px;margin-top:2px">${allLoans.length}</div>
+        </div>
+        <div style="text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">All-time Borrowed</div>
+          <div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--danger);font-size:13px;margin-top:2px">₱ ${fmt(totalBorrowed)}</div>
+        </div>
+      </div>
+    </div>`;
+
+  // Stats grid
+  const mds=(label,value,color)=>`<div style="padding:14px 18px;background:var(--surface2)"><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">${label}</div><div style="font-size:15px;font-weight:700;font-family:'DM Mono',monospace;color:${color||'var(--text)'};">${value}</div></div>`;
+  document.getElementById('ld-stats').innerHTML=
+    mds('Principal','₱ '+fmt(loan.amount),'var(--text)')+
+    mds('Total Repaid','₱ '+fmt(loan.repaid),'var(--accent3)')+
+    mds('Balance','₱ '+fmt(bal),bal>0?'var(--danger)':'var(--accent3)')+
+    mds('Monthly Payment',computeCurrentMonthly(loan),'var(--accent3)')+
+    mds('Due Date',loan.dueDate||'—',ds==='pastdue'?'var(--danger)':ds==='due'?'var(--warning)':'var(--text)')+
+    mds('Status',ds==='settled'?'Settled ✓':ds==='pastdue'?'Past Due ⚠':ds==='due'?'Due Soon':'Active',ds==='settled'?'var(--accent3)':ds==='pastdue'?'var(--danger)':ds==='due'?'var(--warning)':'var(--accent2)');
+
+  // Body: progress + deductions + note
+  const procFee=loan.processingFee||100;
+  const scAllot=loan.scAllotment||250;
+  const netRel=loan.netRelease!=null?loan.netRelease:Math.max(0,Number(loan.amount)-procFee-scAllot);
+  document.getElementById('ld-body').innerHTML=`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+        <span style="color:var(--muted)">Repayment Progress</span>
+        <span style="font-weight:700;color:${barColor}">${pct}%</span>
+      </div>
+      <div style="background:var(--border);border-radius:100px;height:10px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:100px;transition:width .5s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px">
+        <span>₱ ${fmt(loan.repaid)} paid</span>
+        <span>₱ ${fmt(bal)} remaining</span>
+      </div>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:10px">💵 Net Release Breakdown</div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:6px 20px;font-size:13px;align-items:center">
+        <span style="color:var(--muted)">Gross Loan Amount</span><span style="font-family:'DM Mono',monospace;text-align:right">₱ ${fmt(loan.amount)}</span>
+        <span style="color:var(--danger)">− Processing Fee (2%)</span><span style="font-family:'DM Mono',monospace;text-align:right;color:var(--danger)">− ₱ ${fmt(procFee)}</span>
+        <span style="color:var(--warning)">− Share Capital Allotment (5%)</span><span style="font-family:'DM Mono',monospace;text-align:right;color:var(--warning)">− ₱ ${fmt(scAllot)}</span>
+        <span style="font-weight:700;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">Net Cash Released</span>
+        <span style="font-family:'DM Mono',monospace;font-weight:700;font-size:15px;color:var(--accent2);text-align:right;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">₱ ${fmt(netRel)}</span>
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:var(--muted)">ℹ 5% SC allotment (₱ ${fmt(scAllot)}) has been credited to this member's share capital account. Processing fee is 2% (₱ ${fmt(procFee)}).</div>
+    </div>
+    ${loan.note?`<div style="background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted)">📝 ${loan.note}</div>`:''}`;
+
+  // Payment history
+  const payments=Array.isArray(loan.payments)?loan.payments:[];
+  document.getElementById('ld-payments').innerHTML=!payments.length?
+    `<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px;background:var(--surface2);border-radius:10px">No payments recorded yet.</div>`:
+    payments.map((p,i)=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:10px;background:var(--surface2);margin-bottom:8px;gap:10px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(13,158,126,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent3);flex-shrink:0">${i+1}</div>
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:14px;color:var(--accent3)">₱ ${fmt(p.amount)}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:1px">${p.note||'Payment'}</div>
+          </div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">${p.date||'—'}</div>
+      </div>`).join('')+
+    `<div style="margin-top:10px;padding:10px 16px;background:rgba(13,158,126,.06);border:1px solid rgba(13,158,126,.2);border-radius:8px;display:flex;justify-content:space-between;font-size:12px">
+      <span style="color:var(--muted)">Total payments recorded</span>
+      <span style="font-weight:700;font-family:'DM Mono',monospace;color:var(--accent3)">₱ ${fmt(payments.reduce((a,p)=>a+Number(p.amount),0))}</span>
+    </div>`;
+
+  openModal('modal-loan-detail');
+}
+function openPayFromDetail(){
+  const id=_loanDetailId; if(!id) return;
+  closeModal('modal-loan-detail');
+  openPay(id);
+}
+
 // ── LOANS ──
 function renderLoans(){
   const allLoans=DB.getLoans(), users=DB.getUsers();
@@ -1110,11 +2030,26 @@ function renderLoans(){
     const bal=Number(l.amount)-Number(l.repaid);
     const ds=loanDueStatus(l);
     return `<tr>
-      <td>${u?u.fname+' '+u.lname:l.username}${l.fromApplication?'<br><span style="font-size:10px;color:var(--accent3);letter-spacing:.04em">📋 via application</span>':''}</td>
-      <td class="td-mono">₱ ${fmt(l.amount)}</td>
+      <td>
+        <button onclick="openLoanDetail(${l.id})" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;padding:0;text-align:left;font-weight:600" title="View loan detail">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#2a5f94);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">${(u?(u.fname[0]||'')+(u.lname[0]||''):'?')}</div>
+            <div>
+              <div style="color:var(--accent2);text-decoration:underline dotted;text-underline-offset:2px">${u?u.fname+' '+u.lname:l.username}</div>
+              ${l.fromApplication?'<div style="font-size:10px;color:var(--accent3);font-weight:400;margin-top:1px">📋 via application</div>':''}
+            </div>
+          </div>
+        </button>
+      </td>
+      <td>
+        <button onclick="openLoanDetail(${l.id})" style="background:none;border:none;cursor:pointer;padding:0;text-align:left" title="View loan detail">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent2);font-weight:700;text-decoration:underline dotted;text-underline-offset:3px">₱ ${fmt(l.amount)}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Net: ₱ ${fmt(l.netRelease!=null?l.netRelease:Math.max(0,l.amount-(l.processingFee||l.amount*0.02)-(l.scAllotment||l.amount*0.05)))}</div>
+        </button>
+      </td>
       <td><span class="badge b-orange">${l.interest!=null?l.interest+'%':'—'}</span></td>
       <td class="td-mono" style="color:var(--accent3)">${computeCurrentMonthly(l)}</td>
-      <td class="td-mono">₱ ${fmt(l.repaid)}</td>
+      <td class="td-mono">₱ ${fmt(l.repaid)}${l.payments&&l.payments.length?`<span style="margin-left:6px;font-size:10px;background:rgba(13,158,126,.12);color:var(--accent3);padding:2px 6px;border-radius:4px">${l.payments.length} pmts</span>`:''}</td>
       <td class="td-mono" style="color:${bal>0?'var(--danger)':'var(--accent3)'}">₱ ${fmt(bal)}</td>
       <td class="td-mono">${l.dueDate||'—'}</td>
       <td>${daysCell(l)}</td>
@@ -1135,6 +2070,7 @@ function openAddLoan(){
   document.getElementById('loan-amount').value=''; document.getElementById('loan-note').value='';
   document.getElementById('loan-amort-box').style.display='none'; document.getElementById('loan-sharecap-info').style.display='none';
   document.getElementById('loan-max-hint').textContent='';
+  const existWarn=document.getElementById('loan-existing-warn'); if(existWarn) existWarn.style.display='none';
   const d=new Date(); d.setMonth(d.getMonth()+6);
   document.getElementById('loan-due').value=d.toISOString().split('T')[0];
   openModal('modal-loan'); updateLoanCalc();
@@ -1144,18 +2080,47 @@ function updateLoanCalc(){
   const u=DB.getUsers().find(x=>x.username===username);
   const sc=u&&u.shareCapital?Number(u.shareCapital):0;
   const maxLoan=sc*2;
+  // ── Check existing active loan ──
+  const existingActive=DB.getLoans().filter(l=>l.username===username&&l.status==='active');
+  const btn=document.getElementById('loan-submit-btn');
+  const hint=document.getElementById('loan-max-hint');
+  const existingWarn=document.getElementById('loan-existing-warn');
+  if(existingActive.length>0){
+    const activeLoan=existingActive[0];
+    const activeBal=Number(activeLoan.amount)-Number(activeLoan.repaid);
+    if(existingWarn) existingWarn.style.display='block';
+    if(existingWarn) existingWarn.innerHTML=`⛔ This member has an existing active loan of <strong>₱ ${fmt(activeLoan.amount)}</strong> with a balance of <strong>₱ ${fmt(activeBal)}</strong>. They must fully settle it before taking a new loan.`;
+    btn.disabled=true; btn.style.opacity='.5'; hint.textContent='';
+    document.getElementById('loan-sharecap-info').style.display='none';
+    document.getElementById('loan-amort-box').style.display='none';
+    return;
+  }
+  if(existingWarn) existingWarn.style.display='none';
   const scInfo=document.getElementById('loan-sharecap-info');
   if(sc>0){ scInfo.style.display='block'; document.getElementById('lsc-sharecap').textContent='₱ '+fmt(sc); document.getElementById('lsc-max').textContent='₱ '+fmt(maxLoan); }
   else scInfo.style.display='none';
   const principal=Number(document.getElementById('loan-amount').value)||0;
   const annualRate=Number(document.getElementById('loan-interest').value)||18;
-  const hint=document.getElementById('loan-max-hint'); const btn=document.getElementById('loan-submit-btn');
   if(sc>0&&principal>maxLoan){ hint.textContent='Exceeds max (₱ '+fmt(maxLoan)+')'; btn.disabled=true; btn.style.opacity='.5'; }
   else { hint.textContent=sc>0?'Max: ₱ '+fmt(maxLoan):''; btn.disabled=false; btn.style.opacity='1'; }
   const box=document.getElementById('loan-amort-box');
-  if(principal>0){ box.style.display='block'; const mr=annualRate/100/12,n=6; const monthly=principal*mr/(1-Math.pow(1+mr,-n)); const total=monthly*n;
-    document.getElementById('la-principal').textContent='₱ '+fmt(principal); document.getElementById('la-rate').textContent=annualRate+'% p.a.';
-    document.getElementById('la-interest').textContent='₱ '+fmt(total-principal); document.getElementById('la-total').textContent='₱ '+fmt(total); document.getElementById('la-monthly').textContent='₱ '+fmt(monthly);
+  if(principal>0){
+    box.style.display='block';
+    const mr=annualRate/100/12,n=6;
+    const monthly=principal*mr/(1-Math.pow(1+mr,-n));
+    const total=monthly*n;
+    const PROC_FEE=Math.round(principal*0.02*100)/100;
+    const SC_ALLOT=Math.round(principal*0.05*100)/100;
+    const netRelease=principal-PROC_FEE-SC_ALLOT;
+    document.getElementById('la-principal').textContent='₱ '+fmt(principal);
+    document.getElementById('la-rate').textContent=annualRate+'% p.a.';
+    document.getElementById('la-interest').textContent='₱ '+fmt(total-principal);
+    document.getElementById('la-total').textContent='₱ '+fmt(total);
+    document.getElementById('la-monthly').textContent='₱ '+fmt(monthly);
+    document.getElementById('la-gross').textContent='₱ '+fmt(principal);
+    document.getElementById('la-proc-fee').textContent='− ₱ '+fmt(PROC_FEE)+' (2%)';
+    document.getElementById('la-sc-allot').textContent='− ₱ '+fmt(SC_ALLOT)+' (5%)';
+    document.getElementById('la-net').textContent='₱ '+fmt(Math.max(0,netRelease));
   } else box.style.display='none';
 }
 async function saveLoan(){
@@ -1165,23 +2130,55 @@ async function saveLoan(){
   const interest=Number(document.getElementById('loan-interest').value);
   const note=document.getElementById('loan-note').value;
   if(!username||!amount){ toast('Fill in required fields.'); return; }
-  const u=DB.getUsers().find(x=>x.username===username);
+  const users=DB.getUsers(); const u=users.find(x=>x.username===username);
+  // ── Hard block: no new loan if existing active loan ──
+  const existActive=DB.getLoans().filter(l=>l.username===username&&l.status==='active');
+  if(existActive.length>0){ toast('⛔ Member has an existing active loan. Must be fully settled first.'); return; }
   const sc=u&&u.shareCapital?Number(u.shareCapital):0;
-  if(sc>0&&amount>sc*2){ toast('Amount exceeds max loanable.'); return; }
+  if(sc>0&&amount>sc*2){ toast('Amount exceeds max loanable (SC × 2).'); return; }
+  const PROC_FEE=Math.round(amount*0.02*100)/100;
+  const SC_ALLOT=Math.round(amount*0.05*100)/100;
+  const netRelease=Math.max(0,amount-PROC_FEE-SC_ALLOT);
   const mr=interest/100/12; const monthly=amount*mr/(1-Math.pow(1+mr,-6)); const totalPayable=monthly*6;
   const loans=DB.getLoans();
-  const newLoan={id:Date.now(),username,amount,repaid:0,date:today(),dueDate,interest,monthlyPayment:monthly,totalPayable,note,status:'active'};
+  const newLoan={
+    id:Date.now(),username,amount,repaid:0,date:today(),dueDate,interest,
+    monthlyPayment:monthly,totalPayable,note,status:'active',payments:[],
+    processingFee:PROC_FEE,scAllotment:SC_ALLOT,netRelease
+  };
   loans.push(newLoan); DB.saveLoans(loans); await DB.pushLoan(newLoan);
-  closeModal('modal-loan'); renderLoans(); toast('Loan issued.');
+  // ── Add ₱250 to member's share capital ──
+  if(u){
+    u.shareCapital=(Number(u.shareCapital)||0)+SC_ALLOT;
+    DB.saveUsers(users); await DB.pushUser(u);
+    // Record as share capital collection entry
+    const colls=DB.getCollections();
+    const scEntry={id:Date.now()+1,username,amount:SC_ALLOT,year:new Date().getFullYear().toString(),date:today(),note:'Share capital allotment from loan #'+newLoan.id,type:'sharecapital'};
+    colls.push(scEntry); DB.saveCollections(colls); await DB.pushCollection(scEntry);
+  }
+  closeModal('modal-loan'); renderLoans();
+  toast('✓ Loan issued. Net release: ₱ '+fmt(netRelease)+' (after 2% fee ₱'+fmt(PROC_FEE)+' + 5% SC ₱'+fmt(SC_ALLOT)+')');
 }
-function openPay(id){ document.getElementById('pay-loan-id').value=id; document.getElementById('pay-amount').value=''; openModal('modal-pay'); }
+function openPay(id){ document.getElementById('pay-loan-id').value=id; document.getElementById('pay-amount').value=''; document.getElementById('pay-note').value=''; openModal('modal-pay'); }
 async function savePayment(){
-  const id=Number(document.getElementById('pay-loan-id').value); const amt=Number(document.getElementById('pay-amount').value);
+  const id=Number(document.getElementById('pay-loan-id').value);
+  const amt=Number(document.getElementById('pay-amount').value);
+  const note=document.getElementById('pay-note').value.trim();
   if(!amt||amt<=0){ toast('Enter a valid amount.'); return; }
   const loans=DB.getLoans(); const loan=loans.find(l=>l.id===id);
-  if(loan){ loan.repaid=Math.min(Number(loan.repaid)+amt,Number(loan.amount)); if(loan.repaid>=loan.amount) loan.status='settled'; }
+  if(loan){
+    if(!Array.isArray(loan.payments)) loan.payments=[];
+    const prevRepaid=Number(loan.repaid);
+    const capped=Math.min(amt,Number(loan.amount)-prevRepaid);
+    loan.payments.push({amount:capped,date:today(),note:note||'Payment'});
+    loan.repaid=Math.min(prevRepaid+amt,Number(loan.amount));
+    if(loan.repaid>=loan.amount) loan.status='settled';
+  }
   DB.saveLoans(loans); await DB.pushLoan(loan);
-  closeModal('modal-pay'); renderLoans(); toast('Payment recorded.');
+  closeModal('modal-pay'); renderLoans();
+  // Refresh loan detail modal if open
+  if(_loanDetailId===id){ openLoanDetail(id); }
+  toast('✓ Payment of ₱ '+fmt(amt)+' recorded.');
 }
 async function settleLoan(id){ const loans=DB.getLoans(); const loan=loans.find(l=>l.id===id); if(loan) loan.status='settled'; DB.saveLoans(loans); await DB.pushLoan(loan); renderLoans(); toast('Loan settled.'); }
 function openEditLoan(id){
@@ -1205,6 +2202,7 @@ async function saveEditLoan(){
   loan.amount=amount; loan.repaid=Math.min(repaid,amount); loan.interest=interest;
   loan.monthlyPayment=monthly; loan.totalPayable=monthly*6;
   loan.dueDate=val('edit-loan-due'); loan.status=val('edit-loan-status'); loan.note=val('edit-loan-note');
+  if(!Array.isArray(loan.payments)) loan.payments=[];
   DB.saveLoans(loans); await DB.pushLoan(loan);
   closeModal('modal-edit-loan'); renderLoans(); toast('Loan updated.');
 }
@@ -1216,6 +2214,103 @@ async function confirmDeleteLoan(){
   const id=Number(document.getElementById('del-loan-id').value);
   DB.saveLoans(DB.getLoans().filter(l=>l.id!==id)); await DB.deleteLoan(id);
   closeModal('modal-del-loan'); renderLoans(); toast('Loan deleted.');
+}
+
+
+// ── ADD OLD MEMBER ──
+function openAddOldMember(){
+  ['aom-fname','aom-lname','aom-email','aom-share','aom-bbal','aom-bbal-note',
+   'aom-loan','aom-loan-repaid','aom-loan-note'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('aom-date').value=today();
+  document.getElementById('aom-loan-start').value='';
+  document.getElementById('aom-loan-end').value='';
+  document.getElementById('aom-loan-interest').value='18';
+  document.getElementById('aom-loan-preview').style.display='none';
+  document.getElementById('add-old-member-err').style.display='none';
+  openModal('modal-add-old-member');
+}
+function updateAomLoanCalc(){
+  const amount=Number(document.getElementById('aom-loan').value)||0;
+  const rate=Number(document.getElementById('aom-loan-interest').value)||18;
+  const preview=document.getElementById('aom-loan-preview');
+  if(amount>0){
+    preview.style.display='block';
+    const mr=rate/100/12,n=6;
+    const monthly=amount*mr/(1-Math.pow(1+mr,-n));
+    const total=monthly*n;
+    document.getElementById('aom-lp-monthly').textContent='₱ '+fmt(monthly);
+    document.getElementById('aom-lp-total').textContent='₱ '+fmt(total);
+    document.getElementById('aom-lp-interest').textContent='₱ '+fmt(total-amount);
+  } else {
+    preview.style.display='none';
+  }
+}
+async function saveOldMember(){
+  const fname=val('aom-fname'),lname=val('aom-lname'),email=val('aom-email');
+  const share=document.getElementById('aom-share').value.trim();
+  const joined=document.getElementById('aom-date').value||today();
+  const bbal=document.getElementById('aom-bbal').value.trim();
+  const bbalNote=document.getElementById('aom-bbal-note').value.trim();
+  const loanAmt=document.getElementById('aom-loan').value.trim();
+  const loanRepaid=document.getElementById('aom-loan-repaid').value.trim();
+  const loanInterest=Number(document.getElementById('aom-loan-interest').value)||18;
+  const loanStart=document.getElementById('aom-loan-start').value;
+  const loanEnd=document.getElementById('aom-loan-end').value;
+  const loanNote=document.getElementById('aom-loan-note').value.trim();
+  if(!fname||!lname||!email){ showErr('add-old-member-err','First name, last name and email are required.'); return; }
+  document.getElementById('add-old-member-err').style.display='none';
+  // Generate username
+  const users=DB.getUsers();
+  let base=(fname[0]+lname).toLowerCase().replace(/[^a-z0-9]/g,''),username=base,i=1;
+  while(users.find(u=>u.username===username)) username=base+(i++);
+  // Create user record
+  const newUser={
+    username,password:username+'123',role:'member',
+    fname,lname,email,
+    shareCapital:Number(share)||0,
+    joined,status:'active',
+    isOldMember:true
+  };
+  users.push(newUser); DB.saveUsers(users); await DB.pushUser(newUser);
+  // ── Beginning balance as a collection record ──
+  if(bbal&&Number(bbal)>0){
+    const colls=DB.getCollections();
+    const bbEntry={
+      id:Date.now(),username,
+      amount:Number(bbal),year:'2025',
+      date:joined,
+      note:bbalNote||'Beginning balance 2025',
+      type:'collection'
+    };
+    colls.push(bbEntry); DB.saveCollections(colls); await DB.pushCollection(bbEntry);
+  }
+  // ── Existing loan record ──
+  if(loanAmt&&Number(loanAmt)>0){
+    const amount=Number(loanAmt);
+    const repaid=Math.min(Number(loanRepaid)||0,amount);
+    const mr=loanInterest/100/12,n=6;
+    const monthly=amount*mr/(1-Math.pow(1+mr,-n));
+    const totalPayable=monthly*n;
+    const status=repaid>=amount?'settled':'active';
+    // No processing fee / SC allotment deducted for imported old loans
+    const existLoan={
+      id:Date.now()+1,username,amount,repaid,
+      date:loanStart||joined,
+      dueDate:loanEnd||'',
+      interest:loanInterest,
+      monthlyPayment:monthly,totalPayable,
+      note:loanNote||'Existing loan (migrated)',
+      status,payments:[],
+      processingFee:0,scAllotment:0,
+      netRelease:amount,
+      isImported:true
+    };
+    const loans=DB.getLoans();
+    loans.push(existLoan); DB.saveLoans(loans); await DB.pushLoan(existLoan);
+  }
+  closeModal('modal-add-old-member');
+  renderAdminOverview();
+  toast(`✓ Old member added — login: ${username} / ${username}123`);
 }
 
 // ── ADD MEMBER ──
@@ -1251,17 +2346,31 @@ function openMemberDetail(username){
       <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#2a5f94);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;flex-shrink:0">${initials}</div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:13px;flex:1">
         <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Username</div><div class="td-mono">${u.username}</div></div>
-        <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Share Capital</div><div class="td-mono" style="color:var(--accent)">₱ ${fmt(sc)}</div></div>
+        <div>
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Share Capital</div>
+          <div class="td-mono" style="color:var(--accent);font-weight:700">₱ ${fmt(sc)}</div>
+          <div style="margin-top:4px;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+            ${Array.from({length:Math.min(Math.floor(sc/10000),8)}).map((_,i)=>`<span title="Sub ${i+1}" style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#1a5f2a);display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">${i+1}</span>`).join('')}
+            ${Math.floor(sc/10000)>8?`<span style="font-size:10px;color:var(--muted)">+${Math.floor(sc/10000)-8} more</span>`:''}
+            <span style="font-size:11px;color:var(--accent2);font-weight:600">${Math.floor(sc/10000)} subscription${Math.floor(sc/10000)!==1?'s':''}</span>
+          </div>
+        </div>
         <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Collections</div><div class="td-mono">₱ ${fmt(totalColl)}</div></div>
         <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Status</div><div><span class="badge b-green">Active</span></div></div>
       </div>
     </div>`;
   const mds=(label,value,color)=>`<div style="padding:14px 18px;background:var(--surface2)"><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">${label}</div><div style="font-size:15px;font-weight:700;font-family:'DM Mono',monospace;color:${color||'var(--text)'};">${value}</div></div>`;
+  const subsCount=Math.floor(sc/10000);
+  const subsRem=sc%10000;
+  const subsNeeded=subsRem>0?10000-subsRem:0;
+  document.getElementById('md-stats').style.gridTemplateColumns='repeat(4,1fr)';
   document.getElementById('md-stats').innerHTML=
     mds('Total Borrowed','₱ '+fmt(totalBorrowed),'var(--danger)')+
     mds('Total Repaid','₱ '+fmt(totalRepaid),'var(--accent3)')+
     mds('Outstanding','₱ '+fmt(outstanding),outstanding>0?'var(--danger)':'var(--accent3)')+
     mds('Max Loanable','₱ '+fmt(maxLoanable),'var(--accent)')+
+    mds('SC Subscriptions',subsCount+' sub'+(subsCount!==1?'s':'')+(subsRem>0?' (+₱'+fmt(subsRem)+')':''),'var(--accent2)')+
+    mds('Next Subscription','₱ '+fmt(subsNeeded>0?subsNeeded:0)+' needed',subsNeeded>0?'var(--muted)':'var(--accent3)')+
     mds('Used','₱ '+fmt(outstanding),'var(--warning)')+
     mds('Available','₱ '+fmt(loanableLeft),loanableLeft>0?'var(--accent3)':'var(--danger)');
   document.getElementById('md-loans-list').innerHTML=!loans.length?'<div style="text-align:center;color:var(--muted);padding:24px;font-size:13px">No loan records.</div>':[...loans].reverse().map(l=>{
@@ -1404,12 +2513,22 @@ async function approveApp(id,fromModal=false){
   a.status='approved'; a.reviewedAt=new Date().toISOString();
   saveApps(apps);
 
+  // ── Block if existing active loan ──
+  const existActiveLoan=DB.getLoans().filter(l=>l.username===a.username&&l.status==='active');
+  if(existActiveLoan.length>0){
+    if(fromModal) closeModal('modal-app-detail');
+    toast('⛔ '+a.name+' has an existing active loan. Cannot approve until it is settled.');
+    return;
+  }
   // Auto-create loan record from application
   const interest=a.interest||18;
   const mr=interest/100/12, n=6;
   const monthly=a.loanAmount*mr/(1-Math.pow(1+mr,-n));
   const totalPayable=monthly*n;
   const dueDate=new Date(); dueDate.setMonth(dueDate.getMonth()+6);
+  const PROC_FEE=Math.round(a.loanAmount*0.02*100)/100;
+  const SC_ALLOT=Math.round(a.loanAmount*0.05*100)/100;
+  const netRelease=Math.max(0,a.loanAmount-PROC_FEE-SC_ALLOT);
   const newLoan={
     id:Date.now(),
     username:a.username,
@@ -1422,27 +2541,48 @@ async function approveApp(id,fromModal=false){
     totalPayable,
     note:a.purpose+(a.notes?' — '+a.notes:''),
     status:'active',
-    fromApplication:id
+    fromApplication:id,
+    payments:[],
+    processingFee:PROC_FEE,
+    scAllotment:SC_ALLOT,
+    netRelease
   };
   const loans=DB.getLoans();
   loans.push(newLoan); DB.saveLoans(loans);
   await DB.pushLoan(newLoan);
+  // ── Add ₱250 share capital to member ──
+  const appUsers=DB.getUsers(); const appU=appUsers.find(x=>x.username===a.username);
+  if(appU){
+    appU.shareCapital=(Number(appU.shareCapital)||0)+SC_ALLOT;
+    DB.saveUsers(appUsers); await DB.pushUser(appU);
+    const colls=DB.getCollections();
+    const scEntry={id:Date.now()+1,username:a.username,amount:SC_ALLOT,year:new Date().getFullYear().toString(),date:today(),note:'Share capital allotment from loan #'+newLoan.id,type:'sharecapital'};
+    colls.push(scEntry); DB.saveCollections(colls); await DB.pushCollection(scEntry);
+  }
 
   if(fromModal) closeModal('modal-app-detail');
 
-  // Always refresh both Applications AND Loans views so the record appears immediately
+  // Immediately write the loan into localStorage so renderLoans reads it
+  // (already done above via DB.saveLoans)
+
+  // Refresh Applications view
   renderApplications();
-  renderLoans();
 
-  // Auto-navigate to Loan Management tab so admin sees the new entry
-  const allAdminTabs = Array.from(document.querySelectorAll('#admin-page .tab'));
-  const loanMgmtTab = allAdminTabs.find(t => {
-    const oc = t.getAttribute('onclick') || '';
-    return oc.includes("'admin'") && oc.includes("'loans'");
-  });
-  if (loanMgmtTab) loanMgmtTab.click();
+  // Switch to Loan Management tab — switchTab will call renderLoans() itself
+  const allAdminTabs=Array.from(document.querySelectorAll('#admin-page .tab'));
+  const loanTab=allAdminTabs.find(t=>(t.getAttribute('onclick')||'').includes("'loans'"));
+  if(loanTab){
+    // Deactivate all tabs and panels first
+    allAdminTabs.forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('#admin-page .panel').forEach(p=>p.classList.remove('active'));
+    loanTab.classList.add('active');
+    const loansPanel=document.getElementById('admin-loans');
+    if(loansPanel) loansPanel.classList.add('active');
+    // Render loans directly so new record is visible immediately
+    renderLoans();
+  }
 
-  toast('✅ Approved! Loan of ₱ ' + fmt(newLoan.amount) + ' added to Loan Records.');
+  toast('✅ Approved! Loan of ₱ '+fmt(newLoan.amount)+' added to Loan Records.');
 }
 function rejectApp(id,fromModal=false){ const apps=getApps(); const a=apps.find(x=>x.id===id); if(a){a.status='rejected';a.reviewedAt=new Date().toISOString();} saveApps(apps); if(fromModal) closeModal('modal-app-detail'); renderApplications(); toast('Application rejected.'); }
 
@@ -1453,17 +2593,34 @@ function renderMemberHome(){
   const colls=DB.getCollections().filter(c=>c.username===u.username);
   const loans=DB.getLoans().filter(l=>l.username===u.username);
   const initials=(u.fname?.[0]||'')+(u.lname?.[0]||'');
+  const mhSc=Number(u.shareCapital)||0;
+  const mhSubs=Math.floor(mhSc/10000);
+  const mhRem=mhSc%10000;
   document.getElementById('member-profile-card').innerHTML=`
     <div class="profile-avatar">${initials}</div>
-    <div class="profile-info"><h2>${u.fname} ${u.lname}</h2><p>${u.email||''} · Member since ${u.joined||'—'}</p>
-    <div class="tags"><span class="badge b-green">Active</span><span class="badge b-blue">Member</span></div></div>`;
+    <div class="profile-info">
+      <h2>${u.fname} ${u.lname}</h2>
+      <p>${u.email||''} · Member since ${u.joined||'—'}</p>
+      <div class="tags" style="flex-wrap:wrap;gap:6px;margin-top:8px">
+        <span class="badge b-green">Active</span>
+        <span class="badge b-blue">Member</span>
+        <span class="badge b-gold" title="Share Capital">SC: ₱ ${fmt(mhSc)}</span>
+        <span class="badge b-blue" title="${mhSubs} subscriptions @ ₱10,000 each">${mhSubs} Subscription${mhSubs!==1?'s':''}</span>
+        ${mhRem>0?`<span style="font-size:11px;color:var(--muted);padding:3px 8px;background:var(--surface2);border-radius:100px;border:1px solid var(--border)">₱ ${fmt(mhRem)} to next sub</span>`:''}
+      </div>
+      ${mhSubs>0?`<div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap">${Array.from({length:Math.min(mhSubs,10)}).map((_,i)=>`<span title="Subscription ${i+1}" style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#1a5f2a);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">${i+1}</span>`).join('')}${mhSubs>10?`<span style="font-size:11px;color:var(--muted);align-self:center">+${mhSubs-10}</span>`:''}</div>`:''}
+    </div>`;
   const coll25=colls.filter(c=>c.year==='2025').reduce((a,c)=>a+Number(c.amount),0);
   const coll26=colls.filter(c=>c.year==='2026').reduce((a,c)=>a+Number(c.amount),0);
   const totalLoaned=loans.reduce((a,l)=>a+Number(l.amount),0);
   const totalRepaid=loans.reduce((a,l)=>a+Number(l.repaid),0);
+  const mhSc2=Number(u.shareCapital)||0;
+  const mhSubs2=Math.floor(mhSc2/10000);
   document.getElementById('member-stats').innerHTML=
     statCard('sc-gold','💰','My Collection 2025','₱ '+fmt(coll25),'mono')+
     statCard('sc-blue','📈','My Collection 2026','₱ '+fmt(coll26),'mono')+
+    statCard('sc-green','🏛️','Share Capital','₱ '+fmt(mhSc2),'mono')+
+    statCard('sc-purple','🎫','Subscriptions',mhSubs2+' × ₱10K')+
     statCard('sc-red','🏦','My Total Loans','₱ '+fmt(totalLoaned),'mono')+
     statCard('sc-gold','⚖️','My Outstanding','₱ '+fmt(totalLoaned-totalRepaid),'mono');
 }
@@ -1481,11 +2638,33 @@ function renderMyLoans(){
   const totalLoaned=allLoans.reduce((a,l)=>a+Number(l.amount),0);
   const totalRepaid=allLoans.reduce((a,l)=>a+Number(l.repaid),0);
   const pastDue=allLoans.filter(l=>loanDueStatus(l)==='pastdue').length;
+  const sc=Number(currentUser.shareCapital)||0;
+  const maxLoanableDisplay=sc*2;
+  const hasActiveLoan=allLoans.some(l=>l.status==='active');
   document.getElementById('my-loan-stats').innerHTML=
     statCard('sc-red','🏦','Total Borrowed','₱ '+fmt(totalLoaned),'mono')+
     statCard('sc-green','✅','Total Repaid','₱ '+fmt(totalRepaid),'mono')+
     statCard('sc-gold','⚖️','Balance','₱ '+fmt(totalLoaned-totalRepaid),'mono')+
-    statCard('sc-red','🔴','Past Due',pastDue);
+    statCard('sc-red','🔴','Past Due',pastDue)+
+    statCard(hasActiveLoan?'sc-red':'sc-green',hasActiveLoan?'🔒':'✅','Loan Eligibility',hasActiveLoan?'Not Eligible':'Eligible')+
+    statCard('sc-blue','💰','Max Loanable','₱ '+fmt(maxLoanableDisplay),'mono');
+  // Update application button
+  const appBtn=document.getElementById('loan-app-toggle-btn');
+  if(appBtn){
+    if(hasActiveLoan){
+      appBtn.style.background='rgba(192,57,43,.1)';
+      appBtn.style.color='var(--danger)';
+      appBtn.style.border='1px solid rgba(192,57,43,.3)';
+      appBtn.style.boxShadow='none';
+      appBtn.textContent='⛔ Existing Loan Active';
+    } else {
+      appBtn.style.background='';
+      appBtn.style.color='';
+      appBtn.style.border='';
+      appBtn.style.boxShadow='';
+      appBtn.textContent='+ Loan Application';
+    }
+  }
   // Show pending/recent applications for this member
   const myApps=getApps().filter(a=>a.username===currentUser.username);
   const appsSection=document.getElementById('my-pending-apps-section');
@@ -1522,23 +2701,264 @@ function renderMyLoans(){
   } else if(appsSection) {
     appsSection.style.display='none';
   }
-  document.getElementById('my-loans-tbody').innerHTML=[...loans].reverse().map(l=>{
-    const bal=Number(l.amount)-Number(l.repaid);
-    return `<tr>
-      <td class="td-mono">₱ ${fmt(l.amount)}</td>
-      <td><span class="badge b-orange">${l.interest!=null?l.interest+'%':'—'}</span></td>
-      <td class="td-mono" style="color:var(--accent3)">${computeCurrentMonthly(l)}</td>
-      <td class="td-mono">₱ ${fmt(l.repaid)}</td>
-      <td class="td-mono" style="color:${bal>0?'var(--danger)':'var(--accent3)'}">₱ ${fmt(bal)}</td>
-      <td class="td-mono">${l.dueDate||'—'}</td>
-      <td>${daysCell(l)}</td>
-      <td>${statusBadge(l)}</td>
+  const loansContainer=document.getElementById('my-loans-container');
+  if(!loans.length){
+    loansContainer.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px 24px;font-size:13px">No loan records found.</div>';
+  } else {
+    loansContainer.innerHTML=[...loans].reverse().map(l=>{
+      const bal=Number(l.amount)-Number(l.repaid);
+      const pct=Number(l.amount)>0?Math.min(100,Math.round((Number(l.repaid)/Number(l.amount))*100)):0;
+      const ds=loanDueStatus(l);
+      const barColor=ds==='pastdue'?'var(--danger)':ds==='due'?'var(--warning)':'var(--accent3)';
+      const payments=Array.isArray(l.payments)?l.payments:[];
+      const payHistory=payments.length?`
+        <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px">
+          <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:10px">💳 Payment History (${payments.length})</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            ${payments.map((p,i)=>`
+              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border-radius:8px;padding:9px 14px;font-size:12px;gap:8px;flex-wrap:wrap">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span style="width:22px;height:22px;border-radius:50%;background:rgba(13,158,126,.12);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--accent3);flex-shrink:0">${i+1}</span>
+                  <div>
+                    <div style="font-weight:600;color:var(--text)">₱ ${fmt(p.amount)}</div>
+                    <div style="color:var(--muted);font-size:11px;margin-top:1px">${p.note||'Payment'}</div>
+                  </div>
+                </div>
+                <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:right">${p.date||'—'}</div>
+              </div>`).join('')}
+          </div>
+          <div style="margin-top:8px;display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding:0 2px">
+            <span>Total paid: <strong style="color:var(--accent3)">₱ ${fmt(l.repaid)}</strong></span>
+            <span>Remaining: <strong style="color:${bal>0?'var(--danger)':'var(--accent3)'}">₱ ${fmt(bal)}</strong></span>
+          </div>
+        </div>`:'<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;font-size:12px;color:var(--muted);text-align:center">No payments recorded yet.</div>';
+      return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.05)">
+        <button onclick="openMyLoanSchedule(${l.id})" style="width:100%;background:linear-gradient(135deg,var(--surface2),var(--surface));border:none;border-bottom:1px solid var(--border);padding:18px 22px;cursor:pointer;text-align:left;transition:background .15s" onmouseover="this.style.background='rgba(26,107,42,.05)'" onmouseout="this.style.background=''" title="View payment schedule">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <span style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text)">₱ ${fmt(l.amount)}</span>
+                <span class="badge b-orange">${l.interest!=null?l.interest+'%':''} p.a.</span>
+                ${statusBadge(l)}
+                <span style="font-size:11px;color:var(--accent2);background:rgba(26,107,42,.08);border:1px solid rgba(26,107,42,.15);border-radius:100px;padding:2px 10px;font-weight:600">📋 View Schedule</span>
+              </div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">${l.note||''}</div>
+            </div>
+            <div style="text-align:right;font-size:12px">
+              <div style="color:var(--muted)">Due</div>
+              <div class="td-mono" style="font-weight:600">${l.dueDate||'—'}</div>
+              <div style="margin-top:2px">${daysCell(l)}</div>
+            </div>
+          </div>
+        </button>
+        <div style="padding:20px 22px 0">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;font-size:12px;margin-bottom:14px">
+          <div style="background:var(--surface2);border-radius:8px;padding:10px 12px">
+            <div style="color:var(--muted);margin-bottom:3px">Monthly</div>
+            <div class="td-mono" style="font-weight:600;color:var(--accent3)">${computeCurrentMonthly(l)}</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:10px 12px">
+            <div style="color:var(--muted);margin-bottom:3px">Total Paid</div>
+            <div class="td-mono" style="font-weight:600">₱ ${fmt(l.repaid)}</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:10px 12px">
+            <div style="color:var(--muted);margin-bottom:3px">Balance</div>
+            <div class="td-mono" style="font-weight:600;color:${bal>0?'var(--danger)':'var(--accent3)'}">₱ ${fmt(bal)}</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:10px 12px">
+            <div style="color:var(--muted);margin-bottom:3px">Date Issued</div>
+            <div class="td-mono">${l.date||'—'}</div>
+          </div>
+          <div style="background:rgba(26,107,42,.06);border:1px solid rgba(26,107,42,.15);border-radius:8px;padding:10px 12px;grid-column:1/-1">
+            <div style="font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:6px">💵 Net Release Breakdown</div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:12px">
+              <span style="color:var(--muted)">Gross: <strong style="font-family:'DM Mono',monospace">₱ ${fmt(l.amount)}</strong></span>
+              <span style="color:var(--danger)">− Processing Fee (2%): <strong style="font-family:'DM Mono',monospace">₱ ${fmt(l.processingFee||Math.round(l.amount*0.02*100)/100)}</strong></span>
+              <span style="color:var(--warning)">− SC Allotment (5%): <strong style="font-family:'DM Mono',monospace">₱ ${fmt(l.scAllotment||Math.round(l.amount*0.05*100)/100)}</strong></span>
+              <span style="color:var(--accent2);font-weight:700">= Cash Released: <strong style="font-family:'DM Mono',monospace">₱ ${fmt(l.netRelease!=null?l.netRelease:Math.max(0,l.amount-(l.processingFee||l.amount*0.02)-(l.scAllotment||l.amount*0.05)))}</strong></span>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--border);border-radius:100px;height:7px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${barColor};border-radius:100px;transition:width .4s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px">
+          <span>Repayment progress</span><span style="font-weight:600">${pct}%</span>
+        </div>
+        ${payHistory}
+        </div>
+      </div>`;
+    }).join('<div style="height:14px"></div>');
+  }
+}
+
+// ── MEMBER LOAN SCHEDULE MODAL ──
+function openMyLoanSchedule(id){
+  const loan=DB.getLoans().find(l=>l.id===id); if(!loan) return;
+  const principal=Number(loan.amount);
+  const annualRate=Number(loan.interest)||18;
+  const mr=annualRate/100/12, n=6;
+  const monthly=principal*mr/(1-Math.pow(1+mr,-n));
+  const totalPayable=monthly*n;
+  const bal=principal-Number(loan.repaid);
+  const pct=principal>0?Math.min(100,Math.round((Number(loan.repaid)/principal)*100)):0;
+  const ds=loanDueStatus(loan);
+  const barColor=ds==='pastdue'?'var(--danger)':ds==='due'?'var(--warning)':'var(--accent3)';
+
+  // Title
+  document.getElementById('mls-title').textContent='Loan Schedule — ₱ '+fmt(principal);
+  document.getElementById('mls-subtitle').textContent=
+    'Issued '+( loan.date||'—')+' · '+annualRate+'% p.a. · Due '+( loan.dueDate||'—');
+
+  // Summary strip
+  const ms=(label,val,color)=>`<div style="padding:12px 16px;background:var(--surface2)">
+    <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">${label}</div>
+    <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:14px;color:${color||'var(--text)'}">${val}</div>
+  </div>`;
+  document.getElementById('mls-summary').innerHTML=
+    ms('Principal','₱ '+fmt(principal))+
+    ms('Monthly Due','₱ '+fmt(monthly),'var(--accent2)')+
+    ms('Total Paid','₱ '+fmt(loan.repaid),'var(--accent3)')+
+    ms('Balance','₱ '+fmt(bal),bal>0?'var(--danger)':'var(--accent3)');
+
+  // Progress bar
+  document.getElementById('mls-progress-wrap').innerHTML=`
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px">
+      <span>Repayment Progress</span>
+      <span style="font-weight:700;color:${barColor}">${pct}% complete</span>
+    </div>
+    <div style="background:var(--border);border-radius:100px;height:10px;overflow:hidden">
+      <div style="height:100%;width:${pct}%;background:${barColor};border-radius:100px;transition:width .5s"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px">
+      <span>₱ ${fmt(loan.repaid)} paid of ₱ ${fmt(principal)}</span>
+      <span>${statusBadge(loan)}</span>
+    </div>`;
+
+  // Build amortization schedule
+  const startDate=loan.date?new Date(loan.date):new Date();
+  const payments=Array.isArray(loan.payments)?loan.payments:[];
+  let runningPaid=0; // track how much of actual payments cover each month
+  // Map payments to a running pool
+  let paymentPool=payments.reduce((a,p)=>a+Number(p.amount),0);
+  let balance=principal;
+  const rows=[];
+  for(let m=1;m<=n;m++){
+    const dueDate=new Date(startDate); dueDate.setMonth(dueDate.getMonth()+m);
+    const dueDateStr=dueDate.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'});
+    const intPay=balance*mr, prinPay=monthly-intPay;
+    // Determine payment status for this month
+    const monthlyDue=monthly;
+    const covered=Math.min(runningPaid+paymentPool,monthlyDue);
+    let paidAmt=0, status='unpaid';
+    if(runningPaid>=monthlyDue*m){
+      // This month fully covered by prior payments — shouldn't happen but fallback
+      paidAmt=monthlyDue; status='paid';
+    } else {
+      // How much of the total repaid covers up to this month
+      const totalDueSoFar=monthlyDue*m;
+      const totalDuePrevious=monthlyDue*(m-1);
+      const repaidTotal=Number(loan.repaid);
+      if(repaidTotal>=totalDueSoFar){ paidAmt=monthlyDue; status='paid'; }
+      else if(repaidTotal>totalDuePrevious){ paidAmt=repaidTotal-totalDuePrevious; status='partial'; }
+      else { paidAmt=0;
+        // Check if due date has passed
+        const now=new Date(); now.setHours(0,0,0,0); dueDate.setHours(0,0,0,0);
+        status=dueDate<now?'overdue':'upcoming';
+      }
+    }
+    rows.push({m,dueDateStr,dueDate:new Date(dueDate),monthlyDue,paidAmt,status,interest:intPay,principal:prinPay,endBalance:Math.max(0,balance-prinPay)});
+    balance=Math.max(0,balance-prinPay);
+  }
+
+  // If loan is settled, mark all as paid
+  if(loan.status==='settled'){
+    rows.forEach(r=>{ r.status='paid'; r.paidAmt=r.monthlyDue; });
+  }
+
+  // Render table rows
+  const statusConfig={
+    paid:{label:'✅ Paid',bg:'rgba(13,158,126,.08)',border:'rgba(13,158,126,.2)',color:'var(--accent3)'},
+    partial:{label:'⚠️ Partial',bg:'rgba(212,104,10,.08)',border:'rgba(212,104,10,.2)',color:'var(--warning)'},
+    overdue:{label:'🔴 Overdue',bg:'rgba(192,57,43,.08)',border:'rgba(192,57,43,.2)',color:'var(--danger)'},
+    upcoming:{label:'📅 Upcoming',bg:'rgba(26,107,42,.05)',border:'rgba(26,107,42,.15)',color:'var(--accent2)'},
+    unpaid:{label:'⏳ Unpaid',bg:'rgba(0,0,0,.03)',border:'var(--border)',color:'var(--muted)'},
+  };
+  document.getElementById('mls-tbody').innerHTML=rows.map((r,i)=>{
+    const sc=statusConfig[r.status]||statusConfig.unpaid;
+    const isToday=r.dueDate.toDateString()===new Date().toDateString();
+    return `<tr style="border-bottom:1px solid var(--border);background:${i%2===0?'transparent':'rgba(0,0,0,.015)'}">
+      <td style="padding:11px 12px;font-weight:700;color:var(--accent2)">Month ${r.m}</td>
+      <td style="padding:11px 12px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${r.dueDateStr}${isToday?'<span style="margin-left:6px;font-size:10px;background:rgba(212,104,10,.15);color:var(--warning);padding:1px 6px;border-radius:4px">Today</span>':''}</td>
+      <td style="padding:11px 12px;text-align:right;font-family:'DM Mono',monospace;font-weight:600">₱ ${fmt(r.monthlyDue)}</td>
+      <td style="padding:11px 12px;text-align:right;font-family:'DM Mono',monospace;color:${r.paidAmt>0?'var(--accent3)':'var(--muted)'}">
+        ${r.paidAmt>0?'₱ '+fmt(r.paidAmt):'—'}
+        ${r.status==='partial'?`<div style="font-size:10px;color:var(--warning)">Short ₱ ${fmt(r.monthlyDue-r.paidAmt)}</div>`:''}
+      </td>
+      <td style="padding:11px 12px;text-align:center">
+        <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;background:${sc.bg};border:1px solid ${sc.border};color:${sc.color}">${sc.label}</span>
+      </td>
     </tr>`;
-  }).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:28px">No loans</td></tr>';
+  }).join('');
+
+  // Actual payment history list
+  document.getElementById('mls-payments').innerHTML=!payments.length?
+    `<div style="text-align:center;padding:20px;background:var(--surface2);border-radius:10px;font-size:13px;color:var(--muted)">No payments recorded yet.</div>`:
+    payments.map((p,i)=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:var(--surface2);margin-bottom:8px;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:26px;height:26px;border-radius:50%;background:rgba(13,158,126,.12);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--accent3);flex-shrink:0">${i+1}</div>
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--accent3)">₱ ${fmt(p.amount)}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:1px">${p.note||'Payment'}</div>
+          </div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">${p.date||'—'}</div>
+      </div>`).join('')+
+    `<div style="padding:8px 14px;background:rgba(13,158,126,.06);border:1px solid rgba(13,158,126,.18);border-radius:8px;display:flex;justify-content:space-between;font-size:12px;margin-top:4px">
+      <span style="color:var(--muted)">${payments.length} payment${payments.length!==1?'s':''} recorded</span>
+      <span style="font-weight:700;font-family:'DM Mono',monospace;color:var(--accent3)">₱ ${fmt(payments.reduce((a,p)=>a+Number(p.amount),0))} total</span>
+    </div>`;
+
+  openModal('modal-my-loan-schedule');
 }
 
 // ── LOAN APPLICATION FORM ──
 function toggleLoanAppForm(){
+  // Block if existing active loan
+  const activeLoansCheck=DB.getLoans().filter(l=>l.username===currentUser.username&&l.status==='active');
+  if(activeLoansCheck.length>0){
+    const activeLoan=activeLoansCheck[0];
+    const bal=Number(activeLoan.amount)-Number(activeLoan.repaid);
+    const pct=Number(activeLoan.amount)>0?Math.min(100,Math.round((Number(activeLoan.repaid)/Number(activeLoan.amount))*100)):0;
+    // Show inline block instead of form
+    const wrap=document.getElementById('loan-app-form-wrap');
+    wrap.style.display='block';
+    wrap.innerHTML=`<div style="max-width:720px">
+      <div style="background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.25);border-radius:16px;padding:28px 28px;animation:fadeUp .3s ease both">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(192,57,43,.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⛔</div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--danger)">Existing Loan Not Yet Settled</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">You cannot apply for a new loan until your current loan is fully paid.</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:rgba(192,57,43,.15);border-radius:10px;overflow:hidden;margin-bottom:16px">
+          <div style="padding:12px 16px;background:var(--surface)"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Loan Amount</div><div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--danger)">₱ ${fmt(activeLoan.amount)}</div></div>
+          <div style="padding:12px 16px;background:var(--surface)"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Amount Paid</div><div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--accent3)">₱ ${fmt(activeLoan.repaid)}</div></div>
+          <div style="padding:12px 16px;background:var(--surface)"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Remaining Balance</div><div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--danger)">₱ ${fmt(bal)}</div></div>
+          <div style="padding:12px 16px;background:var(--surface)"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Progress</div><div style="font-family:'DM Mono',monospace;font-weight:700">${pct}%</div></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;height:8px;overflow:hidden;margin-bottom:12px">
+          <div style="height:100%;width:${pct}%;background:var(--accent3);border-radius:8px;transition:width .5s"></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Once your current loan is fully settled, you may apply for a new loan of up to <strong style="color:var(--accent2)">₱ ${fmt(Number(currentUser.shareCapital||0)*2)}</strong> (Share Capital × 2).</div>
+        <button class="btn btn-outline" style="width:auto;padding:9px 20px;font-size:13px" onclick="document.getElementById('loan-app-form-wrap').style.display='none'">Close</button>
+      </div>
+    </div>`;
+    wrap.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
   const wrap=document.getElementById('loan-app-form-wrap');
   const visible=wrap.style.display==='block';
   wrap.style.display=visible?'none':'block';
@@ -1566,6 +2986,7 @@ function renderMemberLoanForm(){
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--border);border-radius:10px;overflow:hidden">
       ${scSummCard('Share Capital','₱ '+fmt(sc),'var(--accent)')}
+      ${scSummCard('Subscriptions',Math.floor(sc/10000)+' × ₱10K','var(--accent2)')}
       ${scSummCard('Max Loanable (×2)','₱ '+fmt(maxLoanable),'var(--accent3)')}
       ${scSummCard('Outstanding','₱ '+fmt(outstanding),outstanding>0?'var(--warning)':'var(--accent3)')}
       ${scSummCard('Available','₱ '+fmt(available),available>0?'var(--accent3)':'var(--danger)')}
@@ -1576,6 +2997,22 @@ function renderMemberLoanForm(){
     </div>`;
   setVal('lf-name',u.fname+' '+u.lname);
   ['lf-gender','lf-age','lf-mobile','lf-address','lf-income-source','lf-income','lf-expenses','lf-surplus','lf-amount','lf-purpose','lf-notes'].forEach(id=>{ const el=document.getElementById(id); if(el&&id!=='lf-name') el.value=''; });
+  // Enforce max loanable on the amount field
+  const amtInput=document.getElementById('lf-amount');
+  if(amtInput){
+    amtInput.max=available;
+    amtInput.setAttribute('data-max',available);
+  }
+  const amtHint=document.getElementById('lf-amount-hint');
+  if(amtHint){
+    if(available>0){
+      amtHint.textContent='Max: ₱ '+fmt(available);
+      amtHint.style.color='var(--accent3)';
+    } else {
+      amtHint.textContent='No available credit';
+      amtHint.style.color='var(--danger)';
+    }
+  }
   document.getElementById('lf-success').style.display='none';
   document.getElementById('lf-err').style.display='none';
 }
@@ -1585,6 +3022,17 @@ function updateLFSurplus(){
   const surplus=income-expenses;
   const el=document.getElementById('lf-surplus');
   el.value='₱ '+fmt(surplus); el.style.color=surplus>=0?'var(--accent3)':'var(--danger)';
+}
+function validateLFAmount(inp){
+  const max=Number(inp.getAttribute('data-max'))||0;
+  const hint=document.getElementById('lf-amount-hint');
+  if(max>0&&Number(inp.value)>max){
+    inp.style.borderColor='var(--danger)';
+    if(hint){ hint.textContent='Exceeds max ₱ '+fmt(max); hint.style.color='var(--danger)'; }
+  } else {
+    inp.style.borderColor='';
+    if(hint&&max>0){ hint.textContent='Max: ₱ '+fmt(max); hint.style.color='var(--accent3)'; }
+  }
 }
 function clearLoanForm(){
   ['lf-gender','lf-age','lf-mobile','lf-address','lf-income-source','lf-income','lf-expenses','lf-surplus','lf-amount','lf-purpose','lf-notes'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
@@ -1596,8 +3044,19 @@ function submitLoanForm(){
         incSrc=val('lf-income-source'),income=document.getElementById('lf-income').value.trim(),
         expenses=document.getElementById('lf-expenses').value.trim(),purpose=val('lf-purpose'),amount=document.getElementById('lf-amount').value.trim();
   if(!name||!gender||!age||!address||!mobile||!incSrc||!income||!expenses||!purpose||!amount){ showErr('lf-err','Please fill in all required fields.'); return; }
-  document.getElementById('lf-err').style.display='none';
+  // Hard block: no new loan if existing active loan
+  const existActiveSub=DB.getLoans().filter(l=>l.username===currentUser.username&&l.status==='active');
+  if(existActiveSub.length>0){ showErr('lf-err','⛔ You have an existing active loan. Please settle it fully before applying for a new one.'); return; }
   const loanAmount=Number(amount);
+  // Enforce max loanable
+  const u2=currentUser;
+  const sc2=Number(u2.shareCapital)||0;
+  const loans2=DB.getLoans().filter(l=>l.username===u2.username&&l.status==='active');
+  const outstanding2=loans2.reduce((a,l)=>a+(Number(l.amount)-Number(l.repaid)),0);
+  const available2=Math.max(0,sc2*2-outstanding2);
+  if(loanAmount<=0){ showErr('lf-err','Please enter a valid loan amount.'); return; }
+  if(available2>0&&loanAmount>available2){ showErr('lf-err','Amount exceeds your available credit of ₱ '+fmt(available2)+'.'); return; }
+  document.getElementById('lf-err').style.display='none';
   const interest=18;
   const mr=interest/100/12, n=6;
   const monthly=loanAmount*mr/(1-Math.pow(1+mr,-n));
